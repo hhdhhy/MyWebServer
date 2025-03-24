@@ -26,7 +26,12 @@ public:
     bool empty();
     std::size_t capacity();
 
+
+
 private:
+
+    bool isn_capacity_full();
+    bool isn_empty();
 
     std::deque<T> deque_;
     std::size_t capacity_;
@@ -70,11 +75,10 @@ bool Block_deque<T>::push_front(const T& data)
 
     if (close_) 
         return false;
-    cond_producer_.wait(lock, [this] { return close_ || deque_.size() < capacity_ ; });
+    cond_producer_.wait(lock,isn_capacity_full());
     if (close_) 
         return false;
     
-
     deque_.push_front(data);
 
     cond_consumer_.notify_one();
@@ -89,7 +93,7 @@ bool Block_deque<T>::push_back(const T& data)
 
     if (close_) 
         return false;
-    cond_producer_.wait(lock, [this] { return close_ || deque_.size() < capacity_ ; });
+    cond_producer_.wait(lock,isn_capacity_full());
     if (close_) 
         return false;
     
@@ -109,23 +113,11 @@ bool Block_deque<T>::pop_back(T& data,int timeout_ms)
         return false;
 
     if(timeout_ms==-1)
-    {
-        cond_consumer_.wait(lock,[this]{return  close_ ||!deque_.empty();});
-
-        if(close_)
+        cond_consumer_.wait(lock,isn_empty());
+    else if(cond_consumer_.wait_for(lock,std::chrono::milliseconds(timeout_ms),
+    isn_empty())==std::cv_status::timeout)
         return false;
-        
-        data=deque_.back();
-        deque_.pop_back();
-        cond_producer_.notify_one();
-        return true;
-    }
 
-    if(cond_consumer_.wait_for(lock,std::chrono::milliseconds(timeout_ms),
-    [this]{return close_ ||!deque_.empty();})==std::cv_status::timeout)
-    {
-        return false;
-    }
     if(close_)
         return false;
     
@@ -144,23 +136,11 @@ bool Block_deque<T>::pop_front(T& data,int timeout_ms)
         return false;
 
     if(timeout_ms==-1)
-    {
-        cond_consumer_.wait(lock,[this]{return  close_ ||!deque_.empty();});
-
-        if(close_)
+        cond_consumer_.wait(lock,isn_empty());
+    else if(cond_consumer_.wait_for(lock,std::chrono::milliseconds(timeout_ms),
+    isn_empty())==std::cv_status::timeout)
         return false;
-        
-        data=deque_.front();
-        deque_.pop_front();
-        cond_producer_.notify_one();
-        return true;
-    }
-
-    if(cond_consumer_.wait_for(lock,std::chrono::milliseconds(timeout_ms),
-    [this]{return close_ ||!deque_.empty();})==std::cv_status::timeout)
-    {
-        return false;
-    }
+    
     if(close_)
         return false;
     
@@ -178,22 +158,12 @@ bool Block_deque<T>::front(T &data,int timeout_ms)
     if(close_)
         return false;
     
-
     if(timeout_ms==-1)
-    {
-        cond_consumer_.wait(lock,[this]{return close_ ||!deque_.empty();});
-        if(close_)
+        cond_consumer_.wait(lock,isn_empty());
+    else if(cond_consumer_.wait_for(lock,std::chrono::milliseconds(timeout_ms),
+    isn_empty())==std::cv_status::timeout)
         return false;
-        data=deque_.front();
 
-        return true;
-    }
-
-    if(cond_consumer_.wait_for(lock,std::chrono::milliseconds(timeout_ms),
-    [this]{return close_ || !deque_.empty();})==std::cv_status::timeout)
-    {
-        return false;
-    }
     if(close_)
     return false;
     data=deque_.front();
@@ -210,20 +180,11 @@ bool Block_deque<T>::back(T &data,int timeout_ms)
         return false;
     
     if(timeout_ms==-1)
-    {
-        cond_consumer_.wait(lock,[this]{return close_ ||!deque_.empty();});
-        if(close_)
+        cond_consumer_.wait(lock,isn_empty());
+    else if(cond_consumer_.wait_for(lock,std::chrono::milliseconds(timeout_ms),
+    isn_empty())==std::cv_status::timeout)
         return false;
-        data=deque_.back();
 
-        return true;
-    }
-
-    if(cond_consumer_.wait_for(lock,std::chrono::milliseconds(timeout_ms),
-    [this]{return close_ ||!deque_.empty();})==std::cv_status::timeout)
-    {
-        return false;
-    }
     if(close_)
     return false;
     data=deque_.back();
@@ -257,4 +218,16 @@ template <typename T>
 std::size_t Block_deque<T>::capacity()
 {
     return capacity_;
+}
+
+template <typename T>
+inline bool Block_deque<T>::isn_capacity_full()
+{
+     return close_ || deque_.size() < capacity_ ;
+}
+
+template <typename T>
+inline bool Block_deque<T>::isn_empty()
+{
+    return close_ ||!deque_.empty();
 }
