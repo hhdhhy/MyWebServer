@@ -32,3 +32,8 @@ void Timer::reset_timeout(Timeus timeout)
         timeout_=timeout+interval_;
     }
 }
+
+Timer::Timeus Timer::get_timeout()
+{
+    return timeout_;
+}
