@@ -13,6 +13,9 @@ public:
     bool push_front(const T& data);
     bool push_back(const T& data);
 
+    bool push_back(T&& data);
+    bool push_front(T&& data);
+
     bool pop_back(T& data,int timeout_ms=-1);
     bool pop_front(T& data,int timeout_ms=-1);
 
@@ -104,6 +107,40 @@ bool Block_deque<T>::push_back(const T& data)
 }
 
 template <typename T>
+bool Block_deque<T>::push_back(T&& data)
+{
+    std::unique_lock<std::mutex> lock(mutex_);
+
+    if (close_) 
+        return false;
+    cond_producer_.wait(lock,isn_capacity_full());
+    if (close_) 
+        return false;
+    
+    deque_.push_back(data);
+    cond_consumer_.notify_one();
+
+    return true;
+}
+
+template <typename T>
+bool Block_deque<T>::push_front(T&& data)
+{
+    std::unique_lock<std::mutex> lock(mutex_);
+
+    if (close_) 
+        return false;
+    cond_producer_.wait(lock,isn_capacity_full());
+    if (close_) 
+        return false;
+    
+    deque_.push_front(data);
+    cond_consumer_.notify_one();
+
+    return true;
+}
+
+template <typename T>
 bool Block_deque<T>::pop_back(T& data,int timeout_ms)
 {
 
@@ -121,7 +158,7 @@ bool Block_deque<T>::pop_back(T& data,int timeout_ms)
     if(close_)
         return false;
     
-    data=deque_.back();
+    data=std::move(deque_.back());
     deque_.pop_back();
     cond_producer_.notify_one();  
     return true;
@@ -143,8 +180,7 @@ bool Block_deque<T>::pop_front(T& data,int timeout_ms)
     
     if(close_)
         return false;
-    
-    data=deque_.front();
+    data=std::move(deque_.front());
     deque_.pop_front();
     cond_producer_.notify_one();  
     return true;
