@@ -9,7 +9,7 @@ class Channel
     typedef std::function<void()> callback_function;
 
 public:
-    Channel(Loop* loop,int fd,int event);
+    Channel(Loop* loop,int fd,int event=NONE_EVENT);
     ~Channel();
 
     void set_callback_read(const callback_function& callback);
