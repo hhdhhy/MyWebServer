@@ -42,8 +42,18 @@ void Loop::run()
         {
             channel->callback_all();
         }
+        run_wait_callbacks();
     }
     running_ = false;
+}
+
+void Loop::stop()
+{
+    stop_ = true;
+    if(!is_loop_in_thread())
+    {
+        wakeup();
+    }
 }
 
 void Loop::add_channel(Channel *channel)
@@ -100,7 +110,7 @@ void Loop::add_timer(Timer::Timeus timeout,Timer::callback_function callback,Tim
    timequeue_->add_timer(timeout,callback,interval);
 }
 
-void Loop::add_run_callback(Timer::callback_function &cbf)
+void Loop::add_run_callback(const Timer::callback_function &cbf)
 {
     if(is_loop_in_thread())
     {
@@ -147,8 +157,7 @@ int Loop::get_wakeup_fd()
 
 void Loop::handle_wakeup()
 {
-    int n=wakeup();
-    if(n<0)
+    if(wakeup()<=0)
     {
         throw std::runtime_error("wakeup error");
     }
@@ -159,7 +168,7 @@ int Loop::wakeup()
 {
     char p=1;
     int len;
-    if((len=write(wakeup_channel_.get_fd(),&p,sizeof(p)))<0)
+    if((len=write(wakeup_channel_.get_fd(),&p,sizeof(p)))<=0)
     {
         throw std::runtime_error("wakeup error");
     }

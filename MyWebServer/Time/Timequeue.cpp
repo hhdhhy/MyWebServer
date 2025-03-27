@@ -20,17 +20,20 @@ void Timequeue::add_timer(Timer::Timeus timeout, Timer::callback_function callba
 }
 void Timequeue::add_timer(std::shared_ptr<Timer> timer)
 {
-    std::pair<Timer::Timeus,std::shared_ptr<Timer>> timer_pair({timer->get_timeout(),timer});
-    timer_set_.insert(timer_pair);
-
-    if(*timer_set_.begin()==timer_pair)
-    reset_timeout(timer->get_timeout());
-    
+    loop_->add_run_callback(std::bind(&Timequeue::handle_add,this,timer));
+}
+void Timequeue::handle_add(std::shared_ptr<Timer> timer)
+{
+    if(!loop_->is_loop_in_thread())
+    {
+        throw std::runtime_error("loop is not in thread");
+    }
+    add(timer);
 }
 
-void Timequeue::handle_timer()
+void Timequeue::handle_timer()//读回调
 {
-
+    
 }
 
 int Timequeue::get_timerfd()
@@ -79,4 +82,13 @@ std::vector<Timequeue::value_type> Timequeue::get_timeout_timer()
         }
     }
     return timeout_timer;
+}
+
+void Timequeue::add(std::shared_ptr<Timer> timer)
+{
+    std::pair<Timer::Timeus,std::shared_ptr<Timer>> timer_pair({timer->get_timeout(),timer});
+    timer_set_.insert(timer_pair);
+
+    if(*timer_set_.begin()==timer_pair)
+    reset_timeout(timer->get_timeout());
 }

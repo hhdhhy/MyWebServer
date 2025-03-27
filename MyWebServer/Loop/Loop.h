@@ -12,6 +12,7 @@ public:
     ~Loop();
     typedef std::function<void()> callback_function; 
     void run();// 运行loop
+    void stop();
 
     void add_channel(Channel* channel);
     void remove_channel(Channel* channel);
@@ -22,12 +23,12 @@ public:
 
     void add_timer(Timer::Timeus timeout, Timer::callback_function callback, Timer::Timeus interval);
     
-    void add_run_callback(callback_function &cbf);
+    void add_run_callback(const callback_function &cbf);// 添加一个回调函数，在loop中执行
     void run_wait_callbacks();
 
-    static int get_wakeup_fd();
-    void handle_wakeup();
-    int wakeup();
+    static int get_wakeup_fd();// 获取用于唤醒的eventfd
+    void handle_wakeup();// 读回调
+    int wakeup();// 可以被其他线程调用来唤醒loop（因为loop阻塞在epoll_wait）
 
 private:
     static const int INIT_CHANNELS_NUM = 100;   
