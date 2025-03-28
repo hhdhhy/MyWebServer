@@ -9,7 +9,7 @@ class Channel
     typedef std::function<void()> callback_function;
 
 public:
-    Channel(Loop* loop,int fd,int event=NONE_EVENT);
+    Channel(std::shared_ptr<Loop> loop,int fd,int event=NONE_EVENT);
     ~Channel();
 
     void set_callback_read(const callback_function& callback);
@@ -22,7 +22,7 @@ public:
     int get_events();
     int get_revents();
     int get_fd();
-    Loop* get_loop();
+    std::shared_ptr<Loop> get_loop();
     void  enable_read();
     void  enable_write();
     void  disable_read();
@@ -42,7 +42,7 @@ private:
     
     int events_;
     int revents_;
-    Loop* loop_;
+     std::shared_ptr<Loop> loop_;
     callback_function callback_read_;
     callback_function callback_write_;
     callback_function callback_close_;

@@ -1,6 +1,6 @@
 #include"Channel.h"
 
-Channel::Channel(Loop *loop, int fd, int event=NONE_EVENT)
+Channel::Channel(std::shared_ptr<Loop> loop, int fd, int event=NONE_EVENT)
 : loop_(loop),fd_(fd),events_(event),is_in_epoll_(false)
 {
 
@@ -56,7 +56,7 @@ void Channel::callback_all()
     }
 }
 
-Loop *Channel::get_loop()
+std::shared_ptr<Loop> Channel::get_loop()
 {
     return loop_;
 }

@@ -2,7 +2,7 @@
 #include <functional>
 #include <sys/timerfd.h>
 #include <cstring>
-Timequeue::Timequeue(Loop* loop)
+Timequeue::Timequeue(std::shared_ptr<Loop> loop)
 :loop_(loop),timer_channel_(loop,get_timerfd())
 {
     timer_channel_.enable_read();
