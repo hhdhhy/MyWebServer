@@ -8,7 +8,8 @@ Channel::Channel(std::shared_ptr<Loop> loop, int fd, int event=NONE_EVENT)
 
 Channel::~Channel()
 {
-
+    if(is_in_epoll_)
+    disable_all();
 }
 
 void Channel::set_callback_read(const callback_function &callback)
@@ -54,6 +55,11 @@ void Channel::callback_all()
             callback_write_();
         }
     }
+}
+
+bool Channel::is_in_epoll()
+{
+    return is_in_epoll_;
 }
 
 std::shared_ptr<Loop> Channel::get_loop()
