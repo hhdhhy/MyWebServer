@@ -25,3 +25,7 @@ int Acceptor::get_socket_fd()
     }
     return fd;
 }
+
+void Acceptor::listen()
+{
+}
