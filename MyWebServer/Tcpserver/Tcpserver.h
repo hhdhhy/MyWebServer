@@ -12,8 +12,8 @@ public:
     Tcpserver(/* args */);
     ~Tcpserver();
     
-    void set_callback_connect(callback_connect callback);
-    void set_callback_message(callback_message callback);
+    void set_callback_connect(const callback_connect &callback);
+    void set_callback_message(const callback_message &callback);
 
 private:
     

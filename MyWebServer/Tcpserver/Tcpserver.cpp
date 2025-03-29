@@ -7,10 +7,11 @@ Tcpserver::~Tcpserver()
 {
 }
 
-void Tcpserver::set_callback_connect(callback_connect callback)
+void Tcpserver::set_callback_connect(const callback_connect& callback)
 {
+
 }
 
-void Tcpserver::set_callback_message(callback_message callback)
+void Tcpserver::set_callback_message(const callback_message& callback)
 {
 }
