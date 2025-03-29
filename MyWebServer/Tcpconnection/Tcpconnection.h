@@ -27,7 +27,7 @@ public:
 private:
     
     int connect_id_;
-    Channel channel_;
+    std::shared_ptr<Channel> channel_;
     std::atomic<State> state_;
     std::shared_ptr<Loop> Loop_;
 

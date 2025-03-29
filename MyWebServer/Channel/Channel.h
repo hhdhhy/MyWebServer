@@ -32,7 +32,7 @@ public:
 
     void update_epoll();//更新loop对应的epoll
 
-    void callback_all();
+    void handle_all();
     bool is_in_epoll();
 
 private:
@@ -41,10 +41,11 @@ private:
     static const int WRITE_EVENT = EPOLLOUT;
     static const int NONE_EVENT = 0;
     const int fd_;
-    bool is_in_epoll_;
+    std::atomic<bool> is_calling_;
+    std::atomic<bool> is_in_epoll_;
     int events_;
     int revents_;
-     std::shared_ptr<Loop> loop_;
+    std::shared_ptr<Loop> loop_;
     callback_function callback_read_;
     callback_function callback_write_;
     callback_function callback_close_;

@@ -10,6 +10,10 @@ Channel::~Channel()
 {
     if(is_in_epoll_)
     disable_all();
+    if(is_calling_)
+    {
+        throw std::runtime_error("Channel::handle_all() is calling");
+    }
 }
 
 void Channel::set_callback_read(const callback_function &callback)
@@ -32,8 +36,9 @@ void Channel::set_callback_error(const callback_function &callback)
     callback_error_ = callback;
 }
 
-void Channel::callback_all()
+void Channel::handle_all()
 {
+    is_calling_ = true;
     if(revents_ & EPOLLERR)   
     {
         if(callback_error_)
@@ -55,6 +60,14 @@ void Channel::callback_all()
             callback_write_();
         }
     }
+    if(revents_ & EPOLLOUT)
+    {
+        if(callback_close_)
+        {
+            callback_close_();
+        }
+    }
+    is_calling_ = false;
 }
 
 bool Channel::is_in_epoll()
