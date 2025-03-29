@@ -6,7 +6,7 @@ Timequeue::Timequeue(std::shared_ptr<Loop> loop)
 :loop_(loop),timer_channel_(loop,get_timerfd())
 {
     timer_channel_.enable_read();
-    timer_channel_.set_callback_read(std::bind(&Timequeue::handle_timer,this));
+    timer_channel_.set_callback_read([this](){handle_timer();});
 }
 
 Timequeue::~Timequeue()
