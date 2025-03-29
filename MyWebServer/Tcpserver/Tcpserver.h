@@ -6,15 +6,17 @@
 class Tcpserver
 {
 public:
-    typedef std::function<void(int,sockaddr_in)> callback_connect;
-    typedef std::function<void(int,sockaddr_in)> callback_message;
+    typedef Tcpconnection::callback_connect callback_connect;
+    typedef Tcpconnection::callback_message callback_message;
 
-    Tcpserver(/* args */);
+
+    Tcpserver(sockaddr_in addr);
     ~Tcpserver();
     
     void set_callback_connect(const callback_connect &callback);
     void set_callback_message(const callback_message &callback);
 
+    void handle_connect(int fd,sockaddr_in addr);//创建Tcpconnection
 private:
     
     Acceptor acceptor_;

@@ -20,7 +20,6 @@ private:
     
     void listen();
 
-    int socket_fd;
     std::shared_ptr<Channel> channel_;
     std::shared_ptr<Loop> loop_;
 
