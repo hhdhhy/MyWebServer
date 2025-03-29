@@ -14,12 +14,12 @@ public:
     void run();// 运行loop
     void stop();
 
-    void add_channel(Channel* channel);
-    void remove_channel(Channel* channel);
-    void update_channel(Channel* channel);
+    void add_channel(Channel*);
+    void remove_channel(Channel*);
+    void update_channel(Channel*);
 
     bool is_loop_in_thread();
-    bool is_channel_in_loop(Channel *channel);
+    bool is_channel_in_loop(Channel*);
 
     void add_timer(Timer::Timeus timeout, Timer::callback_function callback, Timer::Timeus interval);
     

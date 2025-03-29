@@ -2,7 +2,7 @@
 #include <functional>
 #include <sys/timerfd.h>
 #include <cstring>
-Timequeue::Timequeue(std::shared_ptr<Loop> loop)
+Timequeue::Timequeue(Loop* loop)
 :loop_(loop),timer_channel_(loop,get_timerfd())
 {
     timer_channel_.enable_read();
@@ -38,7 +38,6 @@ void Timequeue::handle_timer()//读回调
 
 int Timequeue::get_timerfd()
 {
-
     int timerfd = timerfd_create(CLOCK_MONOTONIC,TFD_NONBLOCK | TFD_CLOEXEC);
     if(timerfd < 0)
     {

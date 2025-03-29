@@ -40,7 +40,7 @@ void Loop::run()
         epoll_->poll(MAX_EPOLL_TIME,active_channels_);
         for (auto channel : active_channels_)
         {
-            channel->callback_all();
+            channel->handle_all();
         }
         run_wait_callbacks();
     }
@@ -56,7 +56,7 @@ void Loop::stop()
     }
 }
 
-void Loop::add_channel(Channel *channel)
+void Loop::add_channel(Channel*channel)
 {
     if(!is_loop_in_thread())
     {
@@ -69,7 +69,7 @@ void Loop::add_channel(Channel *channel)
     epoll_->add_channel(channel);
 }
 
-void Loop::remove_channel(Channel *channel)
+void Loop::remove_channel(Channel*channel)
 {
     if(!is_loop_in_thread())
     {
@@ -82,7 +82,7 @@ void Loop::remove_channel(Channel *channel)
     epoll_->delete_channel(channel);
 }
 
-void Loop::update_channel(Channel *channel)
+void Loop::update_channel(Channel*channel)
 {
     if(!is_loop_in_thread())
     {
@@ -92,6 +92,7 @@ void Loop::update_channel(Channel *channel)
     {
         throw std::runtime_error("channel is not in loop");
     }
+    
     epoll_->update_channel(channel);
 }
 
@@ -100,7 +101,7 @@ bool Loop::is_loop_in_thread()
     return thread_id_==std::this_thread::get_id();
 }
 
-bool Loop::is_channel_in_loop(Channel *channel)
+bool Loop::is_channel_in_loop(Channel*channel)
 {
     return channel->get_loop() == this;
 }

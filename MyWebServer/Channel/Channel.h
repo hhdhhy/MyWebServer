@@ -4,12 +4,13 @@
 #include"Loop.h"
 
 //封装fd与其关注事件与发生事件 和回调函数
+//掌管fd的关闭
 class Channel
 {
     typedef std::function<void()> callback_function;
 
 public:
-    Channel(std::shared_ptr<Loop> loop,int fd,int event=NONE_EVENT);
+    Channel(Loop* loop,int fd,int event=NONE_EVENT);
     ~Channel();
 
     void set_callback_read(const callback_function& callback);
@@ -22,7 +23,7 @@ public:
     int get_events();
     int get_revents();
     int get_fd();
-    std::shared_ptr<Loop> get_loop();
+    Loop* get_loop();
     void  enable_read();
     void  enable_write();
     void  disable_read();
@@ -34,7 +35,7 @@ public:
 
     void handle_all();
     bool is_in_epoll();
-
+    std::atomic<bool> is_in_epoll_;
 private:
     /* data */
     static const int READ_EVENT = EPOLLIN;
@@ -42,10 +43,10 @@ private:
     static const int NONE_EVENT = 0;
     const int fd_;
     std::atomic<bool> is_calling_;
-    std::atomic<bool> is_in_epoll_;
+ 
     int events_;
     int revents_;
-    std::shared_ptr<Loop> loop_;
+    Loop* loop_;
     callback_function callback_read_;
     callback_function callback_write_;
     callback_function callback_close_;

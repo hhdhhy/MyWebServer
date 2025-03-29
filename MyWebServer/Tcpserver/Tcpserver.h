@@ -20,7 +20,7 @@ public:
 private:
     
     Acceptor acceptor_;
-    std::shared_ptr<Loop> loop_;
+    Loop* loop_;
 
     std::map<int,std::shared_ptr<Tcpconnection>> connections_;
     int next_connection_id_;

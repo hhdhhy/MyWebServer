@@ -1,6 +1,6 @@
 #include"Channel.h"
-
-Channel::Channel(std::shared_ptr<Loop> loop, int fd, int event=NONE_EVENT)
+#include<unistd.h>
+Channel::Channel(Loop* loop, int fd, int event=NONE_EVENT)
 : loop_(loop),fd_(fd),events_(event),is_in_epoll_(false)
 {
 
@@ -14,6 +14,8 @@ Channel::~Channel()
     {
         throw std::runtime_error("Channel::handle_all() is calling");
     }
+    if(fd_>=0)
+    close(fd_);
 }
 
 void Channel::set_callback_read(const callback_function &callback)
@@ -75,7 +77,7 @@ bool Channel::is_in_epoll()
     return is_in_epoll_;
 }
 
-std::shared_ptr<Loop> Channel::get_loop()
+Loop* Channel::get_loop()
 {
     return loop_;
 }

@@ -8,7 +8,7 @@ class Timequeue
 {
 public:
     typedef std::pair<Timer::Timeus, std::shared_ptr<Timer>> value_type;
-    Timequeue(std::shared_ptr<Loop>loop);
+    Timequeue(Loop* loop);
     ~Timequeue();
 
     void add_timer(Timer::Timeus timeout, Timer::callback_function callback, Timer::Timeus interval = 0);

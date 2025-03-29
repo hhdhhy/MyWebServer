@@ -1,6 +1,6 @@
 #include "Tcpserver.h"
 Tcpserver::Tcpserver(sockaddr_in addr)
-:loop_(std::make_shared<Loop>()),acceptor_(loop_,addr)
+:loop_(),acceptor_(loop_,addr)
 {
 }
 
@@ -25,5 +25,4 @@ void Tcpserver::handle_connect(int fd,sockaddr_in addr)
     next_connection_id_++;
     connection->set_callback_connect(callback_connect_);
     connection->set_callback_message(callback_message_);
-    
 }

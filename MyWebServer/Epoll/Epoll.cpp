@@ -20,7 +20,7 @@ Epoll::~Epoll()
     close(epoll_fd_);   
 }
 
-void Epoll::poll(int timeout_ms,std::vector<std::shared_ptr<Channel>>&active_channels)
+void Epoll::poll(int timeout_ms,std::vector<Channel*>&active_channels)
 {
     int num_events=0;
     do
@@ -48,7 +48,7 @@ void Epoll::poll(int timeout_ms,std::vector<std::shared_ptr<Channel>>&active_cha
 
 }
 
-void Epoll::delete_channel(std::shared_ptr<Channel> channel)
+void Epoll::delete_channel(Channel* channel)
 {
     if(channels_.count(channel->get_fd())==0)
     {
@@ -68,10 +68,10 @@ void Epoll::delete_channel(std::shared_ptr<Channel> channel)
     }
 }
 
-void Epoll::update_channel(std::shared_ptr<Channel> channel)
+void Epoll::update_channel(Channel* channel)
 {
     
-    if(channel->is_in_epoll_==0)
+    if(channel->is_in_epoll()==0)
     {
         add_channel(channel);
     }
@@ -91,7 +91,7 @@ void Epoll::update_channel(std::shared_ptr<Channel> channel)
     }
 }
 
-void Epoll::add_channel(std::shared_ptr<Channel> channel)
+void Epoll::add_channel(Channel* channel)
 {
     if(channels_.count(channel->get_fd())==0)
     {

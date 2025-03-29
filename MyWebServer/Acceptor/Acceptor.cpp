@@ -4,7 +4,7 @@
 #include <netinet/in.h>
 #include <stdexcept>
 
-Acceptor::Acceptor(std::shared_ptr<Loop> loop, sockaddr_in addr)
+Acceptor::Acceptor(Loop* loop, sockaddr_in addr)
 : loop_(loop),
 channel_(std::make_shared<Channel>(loop,get_socket_fd()))
 {
