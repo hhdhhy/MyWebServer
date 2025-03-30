@@ -17,8 +17,9 @@ public:
     };
 
     typedef std::function<void(std::shared_ptr<Tcpconnection>)> callback_connect;
-    typedef std::function<void (std::shared_ptr<Tcpconnection>, std::shared_ptr<Buffer>,int)>  callback_message;
-   
+    typedef std::function<void (std::shared_ptr<Tcpconnection>, Buffer&,int)>  callback_message;
+    typedef std::function<void (std::shared_ptr<Tcpconnection>, size_t)> callback_highwater_write;
+    typedef std::function<void (std::shared_ptr<Tcpconnection>)> callback_complete_write;
     Tcpconnection(int connect_id,Loop* Loop,int socket_fd);
     ~Tcpconnection();
 
@@ -26,14 +27,17 @@ public:
     void set_callback_message(const callback_message &callback);
     void set_callback_close(const callback_connect &callback);
 
+    void send(std::string str);
+    void handle_send(std::string str);
     void handle_write();
     void handle_read();
     void handle_close();
-    void handle_error();
-    void handle_close_write();
+    void handle_error(); 
     void handle_destroy();
+    void handle_close_write();
     void write_close();
 
+    
 
     int get_connect_id();
     Loop* get_loop();
@@ -47,8 +51,9 @@ private:
     callback_connect callback_connect_;
     callback_message callback_message_;
     callback_connect callback_close_;
-
-    std::shared_ptr<Buffer> in_buffer_;
-    std::shared_ptr<Buffer> out_buffer_;
+    callback_highwater_write callback_highwater_write_;
+    callback_complete_write callback_complete_write_;
+    Buffer in_buffer_;
+    Buffer out_buffer_;
 };
 

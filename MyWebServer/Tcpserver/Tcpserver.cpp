@@ -18,6 +18,10 @@ void Tcpserver::set_callback_message(const callback_message& callback)
     callback_message_ = callback;
 }
 
+void Tcpserver::set_callback_close(const callback_connect &callback)
+{
+    callback_close_ = callback;
+}
 
 void Tcpserver::handle_connect(int fd,sockaddr_in addr)
 {
@@ -26,11 +30,12 @@ void Tcpserver::handle_connect(int fd,sockaddr_in addr)
     next_connection_id_++;
     connection->set_callback_connect(callback_connect_);
     connection->set_callback_message(callback_message_);
-    connection->set_callback_close(std::bind(&handle_close,this,std::placeholders::_1));
+    connection->set_callback_close([this](const std::shared_ptr<Tcpconnection> &conn){handle_close(conn);});
+
 }
 
 void Tcpserver::handle_close(const std::shared_ptr<Tcpconnection> &conn)//等conn把cancel从epoll删除完再删除自己
 {
     connections_.erase(conn->get_connect_id());
-    conn->get_loop()->add_run_callback([conn](){ conn->handle_destroy();});
+    loop_->add_run_callback([conn](){ conn->handle_destroy();});
 }

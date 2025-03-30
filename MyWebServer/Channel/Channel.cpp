@@ -41,6 +41,7 @@ void Channel::set_callback_error(const callback_function &callback)
 void Channel::set_events(const int &event)
 {
     events_ = event;
+    update_epoll();
 }
 
 void Channel::set_revents(const int &revent)

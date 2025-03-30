@@ -27,6 +27,6 @@ private:
     int next_connection_id_;
     callback_connect callback_connect_;
     callback_message callback_message_;
-  
+    callback_connect callback_close_;
 };
 
