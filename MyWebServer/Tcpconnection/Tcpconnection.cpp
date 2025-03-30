@@ -12,7 +12,10 @@ channel_(loop,socket_fd)
     channel_.set_callback_read([this](){handle_read();});
     channel_.set_callback_write([this](){handle_write();});
 
-    
+    // SO_KEEPALIVE 启用在已连接的套接字上定期传输消息。
+    // 如果另一端没有响应，则认为连接已断开并关闭,这对于检测网络中失效的对等方非常有用。
+    int opt=1;
+    ::setsockopt(channel_.get_fd(), SOL_SOCKET, SO_KEEPALIVE, &opt, sizeof(opt));
 }
 
 Tcpconnection::~Tcpconnection()
@@ -28,6 +31,21 @@ void Tcpconnection::set_callback_connect(const callback_connect &callback)
 void Tcpconnection::set_callback_message(const callback_message &callback)
 {
     callback_message_ = callback;
+}
+
+void Tcpconnection::set_callback_close(const callback_connect &callback)
+{
+    callback_close_ = callback;
+}
+
+void Tcpconnection::set_callback_highwater_write(const callback_highwater_write &callback)
+{
+    callback_highwater_write_ = callback;
+}
+
+void Tcpconnection::set_callback_complete_write(const callback_complete_write &callback)
+{
+    callback_complete_write_ = callback;
 }
 
 void Tcpconnection::handle_read()
@@ -66,6 +84,13 @@ void Tcpconnection::send(std::string str)
     {
         loop_->add_run_callback([this,str=std::move(str)]() mutable {handle_send(std::move(str));});
     }
+}
+
+void Tcpconnection::handle_connect()
+{
+    channel_.tie(shared_from_this());
+    channel_.enable_read();
+    callback_connect_(shared_from_this());
 }
 
 void Tcpconnection::handle_send(std::string str)//TL下可以少发一次减少延迟

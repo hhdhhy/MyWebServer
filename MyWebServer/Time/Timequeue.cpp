@@ -54,6 +54,10 @@ void Timequeue::reset_timeout(Timer::Timeus new_timeout)
     //itimerspec.it_value：指定定时器的初始启动时间。
 
     Timer::Timeus dif_time_ms= new_timeout - timeout_;
+    if(dif_time_ms<0)
+    {
+        dif_time_ms = 1000;
+    }
     new_spec.it_value.tv_sec = dif_time_ms/1000000;
     new_spec.it_value.tv_nsec = (dif_time_ms%1000000)*1000;
 

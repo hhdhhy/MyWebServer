@@ -15,8 +15,6 @@ public:
     std::size_t read_capacity();
     std::size_t prepend_capacity();
 
-
-
     int fd_read(int fd, int &err);
     void cstr_read(const char *str, size_t len);
     int fd_write(int fd, int &err);
@@ -46,6 +44,5 @@ private:
     std::atomic<std::size_t> read_idx_;
     std::atomic<std::size_t> write_idx_;
 
-    
 };
 

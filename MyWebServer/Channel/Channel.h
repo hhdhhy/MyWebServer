@@ -37,9 +37,11 @@ public:
     
     void update_epoll();//更新loop对应的epoll
 
-
+    void handle_do_all();
     void handle_all();
     bool is_in_epoll();
+
+    void tie(const std::shared_ptr<void>&);
     std::atomic<bool> is_in_epoll_;
 private:
     /* data */
@@ -57,5 +59,6 @@ private:
     callback_function callback_close_;
     callback_function callback_error_;
 
+    std::shared_ptr<void> tie_;
 };
 

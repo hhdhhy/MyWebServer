@@ -63,7 +63,22 @@ int Channel::get_fd()
 {
     return fd_;
 }
-
+void Channel::handle_do_all()
+{
+    if(tie_)
+    {
+        std::shared_ptr<void> guard = tie_;
+        if(guard)
+        {
+            handle_all();
+        }
+    }
+    else
+    {
+        handle_all();
+    }
+    
+}
 void Channel::handle_all()
 {
     is_calling_ = true;
@@ -101,6 +116,11 @@ void Channel::handle_all()
 bool Channel::is_in_epoll()
 {
     return is_in_epoll_;
+}
+
+void Channel::tie(const std::shared_ptr<void>& ti)
+{
+    tie_=ti;
 }
 
 Loop* Channel::get_loop()

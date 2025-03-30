@@ -26,8 +26,11 @@ public:
     void set_callback_connect(const callback_connect &callback);
     void set_callback_message(const callback_message &callback);
     void set_callback_close(const callback_connect &callback);
-
+    void set_callback_highwater_write(const callback_highwater_write &callback);
+    void set_callback_complete_write(const callback_complete_write &callback);
+    
     void send(std::string str);
+    void handle_connect();
     void handle_send(std::string str);
     void handle_write();
     void handle_read();
