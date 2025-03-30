@@ -30,7 +30,10 @@ public:
     void handle_read();
     void handle_close();
     void handle_error();
-    void connect_close();
+    void handle_close_write();
+    void handle_destroy();
+    void write_close();
+
 
     int get_connect_id();
     Loop* get_loop();

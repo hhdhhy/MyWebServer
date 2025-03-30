@@ -32,5 +32,5 @@ void Tcpserver::handle_connect(int fd,sockaddr_in addr)
 void Tcpserver::handle_close(const std::shared_ptr<Tcpconnection> &conn)//等conn把cancel从epoll删除完再删除自己
 {
     connections_.erase(conn->get_connect_id());
-    conn->get_loop()->add_run_callback([conn](){ conn->handle_close();});
+    conn->get_loop()->add_run_callback([conn](){ conn->handle_destroy();});
 }

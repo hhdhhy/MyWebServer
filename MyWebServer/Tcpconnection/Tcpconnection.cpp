@@ -62,7 +62,7 @@ void Tcpconnection::handle_write()
 void Tcpconnection::handle_close()
 {
     channel_.disable_all();
-    callback_close_(shared_from_this());
+    callback_close_(shared_from_this());//实际调用handle_destroy（通过run_add_callback保证自己在loop线程中被删除）
 
 }
 
@@ -71,7 +71,7 @@ void Tcpconnection::handle_error()
     throw  std::runtime_error("Tcpconnection::handle_error() must be called in loop thread");
 }
 
-void Tcpconnection::connect_close()
+void Tcpconnection::handle_destroy()
 {
     if(!loop_->is_loop_in_thread())
     {
@@ -93,4 +93,3 @@ Loop *Tcpconnection::get_loop()
     return loop_;
 }
 
-void 

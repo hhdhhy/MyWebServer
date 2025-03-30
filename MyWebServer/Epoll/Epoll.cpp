@@ -73,6 +73,7 @@ void Epoll::update_channel(Channel* channel)
     
     if(channel->is_in_epoll()==0)
     {
+        if(channel->get_events())
         add_channel(channel);
     }
     else if(channel->get_events() == 0)
