@@ -24,18 +24,22 @@ public:
 
     void set_callback_connect(const callback_connect &callback);
     void set_callback_message(const callback_message &callback);
+    void set_callback_close(const callback_connect &callback);
 
     void handle_write();
     void handle_read();
     void handle_close();
     void handle_error();
     void connect_close();
+
+    int get_connect_id();
+    Loop* get_loop();
 private:
     
     int connect_id_;
     Channel channel_;
     std::atomic<State> state_;
-    std::shared_ptr<Loop> loop_;
+    Loop* loop_;
 
     callback_connect callback_connect_;
     callback_message callback_message_;

@@ -20,18 +20,23 @@ public:
 
     void set_events(const int &event);
     void set_revents(const int &revent);
+
     int get_events();
     int get_revents();
     int get_fd();
     Loop* get_loop();
+
+    bool is_enable_read();
+    bool is_enable_write();
+
     void  enable_read();
     void  enable_write();
     void  disable_read();
     void  disable_write();
-
     void  disable_all();
-
+    
     void update_epoll();//更新loop对应的epoll
+
 
     void handle_all();
     bool is_in_epoll();

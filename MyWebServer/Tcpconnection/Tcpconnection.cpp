@@ -7,10 +7,10 @@ Tcpconnection::Tcpconnection(int connect_id, Loop* loop, int socket_fd)
 loop_(loop),
 channel_(loop,socket_fd)
 {
-    channel_.set_callback_close([this](){this->handle_close();});
-    channel_.set_callback_error([this](){this->handle_error();});
-    channel_.set_callback_read([this](){this->handle_read();});
-    channel_.set_callback_write([this](){this->handle_write();});
+    channel_.set_callback_close([this](){handle_close();});
+    channel_.set_callback_error([this](){handle_error();});
+    channel_.set_callback_read([this](){handle_read();});
+    channel_.set_callback_write([this](){handle_write();});
 }
 
 Tcpconnection::~Tcpconnection()
@@ -78,5 +78,19 @@ void Tcpconnection::connect_close()
         throw  std::runtime_error("Tcpconnection::handle_read() must be called in loop thread");
     }
     channel_.disable_all();
+    callback_connect_(shared_from_this());
+    loop_->remove_channel(&channel_);
 
 }
+
+int Tcpconnection::get_connect_id()
+{
+    return connect_id_;
+}
+
+Loop *Tcpconnection::get_loop()
+{
+    return loop_;
+}
+
+void 

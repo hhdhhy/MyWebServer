@@ -38,6 +38,31 @@ void Channel::set_callback_error(const callback_function &callback)
     callback_error_ = callback;
 }
 
+void Channel::set_events(const int &event)
+{
+    events_ = event;
+}
+
+void Channel::set_revents(const int &revent)
+{
+    revents_ = revent;
+}
+
+int Channel::get_events()
+{
+    return events_;
+}
+
+int Channel::get_revents()
+{
+    return revents_;
+}
+
+int Channel::get_fd()
+{
+    return fd_;
+}
+
 void Channel::handle_all()
 {
     is_calling_ = true;
@@ -80,4 +105,49 @@ bool Channel::is_in_epoll()
 Loop* Channel::get_loop()
 {
     return loop_;
+}
+
+bool Channel::is_enable_read()
+{
+    return events_&EPOLLIN;
+}
+
+bool Channel::is_enable_write()
+{
+    return events_&EPOLLOUT;
+}
+
+void Channel::enable_read()
+{
+    events_ |= EPOLLIN;
+    update_epoll();
+}
+
+void Channel::enable_write()
+{
+    events_ |= EPOLLOUT;
+    update_epoll();
+}
+
+void Channel::disable_read()
+{
+    events_ &= ~EPOLLIN;
+    update_epoll();
+}
+
+void Channel::disable_write()
+{
+    events_ &= ~EPOLLOUT;
+    update_epoll();
+}
+
+void Channel::disable_all()
+{
+    events_ = 0;
+    update_epoll();
+}
+
+void Channel::update_epoll()
+{
+    loop_->update_channel(this);
 }

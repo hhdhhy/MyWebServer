@@ -44,11 +44,11 @@ private:
     std::unique_ptr<Timequeue> timequeue_;
 
     std::vector<Channel*> active_channels_; // 活跃的channel
-    std::vector<Channel*> channels_;// 拥有的channel
+    //std::vector<Channel*> channels_;// 拥有的channel
     
     std::atomic<bool> has_wait_callbacks_;// 是否有等待执行的回调函数
-    std::vector<callback_function> wait_callbacks_;// 等待执行的回调函数
-    std::mutex wait_callbacks_mutex_;// 等待执行的回调函数栈的锁
+    std::vector<callback_function> wait_callbacks_;// 等待执行的回调函数队列
+    std::mutex wait_callbacks_mutex_;// 等待执行的回调函数队列的锁
 
     Channel wakeup_channel_;
 };

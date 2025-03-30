@@ -56,8 +56,6 @@ void Buffer::has_write(size_t len)
     write_idx_+=len;
 }
 
-
-
 int Buffer::fd_read(int fd,int &err)
 {
     char sta_buf[STA_BUFFER_SIZE];
@@ -94,6 +92,7 @@ void Buffer::cstr_read(const char *str,size_t len)
     }
     else
     {
+        std::copy(str,str+write_capacity(),write_addr());
         has_write(write_capacity());
         append(str,len-write_capacity());
     }
