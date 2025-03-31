@@ -32,7 +32,7 @@ struct close_file
         {
             if(fclose(fp)==EOF)
             {
-                //日志
+                LOG_ERROR<<"Loger::get_fp()";
             }
         }
     }
@@ -60,7 +60,7 @@ Loger::~Loger()
         thread_->join();
     }
 }
-void Loger::push(char *data,std::size_t len)//其他线程调用
+void Loger::push(char *data,std::size_t len)//可跨线程
 {
     std::lock_guard<std::mutex> lock(mutex_);
     if(cur_buffer_->avail()>=len)

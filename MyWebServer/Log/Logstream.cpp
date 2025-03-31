@@ -2,12 +2,12 @@
 #include<cstring>
 #include"Loger.h"
 
-Logstream::Logstream(int level, char *file, int line, char *func)
+Logstream::Logstream(LogLevel level,const char *file, int line,const char *func)
 :idx_(0)
 {
     push_time();
     operator<<("__");
-    push_level();
+    push_level(level);
     operator<<("__");
     operator<<((cstr){file,strlen(file)});
     operator<<("__");
@@ -33,9 +33,31 @@ void Logstream::push_time()
     buffer_pushed(len);
 }
 
-void Logstream::push_level()
+void Logstream::push_level(LogLevel level)
 {
-
+    switch (level)
+    {
+    case LogLevel::DEBUG:
+        operator<<("DEBUG");
+        break;
+    case LogLevel::ERROR:
+        operator<<("ERROR");
+        break;
+    case LogLevel::FATAL:
+        operator<<("FATAL");
+        break;
+    case LogLevel::INFO:
+        operator<<("INFO");
+        break;
+    case LogLevel::TRACE:
+        operator<<("TRACE");
+        break;
+    case LogLevel::WARN:
+        operator<<("WARN");
+        break;
+    default:
+        operator<<("UNKNOWN");
+    }
 }
 
 char* Logstream::get_buffer_addr()

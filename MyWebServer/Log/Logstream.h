@@ -23,7 +23,7 @@ public:
         std::size_t len;
     };
 
-    Logstream(int level,char * file,int line,char * func);
+    Logstream(LogLevel level,const char *file,int line,const char *func);
     ~Logstream();
     Logstream& operator<<(const char data);
     Logstream& operator<<(const char *str);
@@ -37,7 +37,7 @@ public:
 private:
     
     void push_time();
-    void push_level();
+    void push_level(LogLevel level);
     char data_[BUFFER_SIZE];
     std::size_t idx_ =0;
     char *get_buffer_addr();
