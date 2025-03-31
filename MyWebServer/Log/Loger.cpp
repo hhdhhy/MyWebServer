@@ -165,6 +165,6 @@ void Loger::write_to_file()
 
 void Loger::run_thread()
 {
-    thread_.reset(new std::thread([this](){loop();}));
+    thread_.reset(new std::thread([this](){loop();}));//不用考虑线程安全
 }
 
