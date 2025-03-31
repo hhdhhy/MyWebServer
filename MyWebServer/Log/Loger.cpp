@@ -5,41 +5,51 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <cstring>
-Loger::Loger()
-:file_num_(1),file_size_(0),stop_(0)
-{
-    time_t time(NULL);
-    localtime_r(&time,&day_);
-    open_file(day_);
-}
 
-bool Loger::open_file(tm &day)
+FILE* Loger::get_fp(time_t &time_day,std::size_t &file_num,std::string&file_name)
 {
-    std::string file_name="webserver-";
-    
+    time(&time_day);
+    tm day;
+    localtime_r(&time_day,&day);
+
+    file_name="webserver-";
     file_name+=std::to_string(day.tm_year+1900);
-    file_name+="/";
+    file_name+="_";
     file_name+=std::to_string(day.tm_mon+1);
-    file_name+="/";
+    file_name+="_";
     file_name+=std::to_string(day.tm_mday);
     file_name+="-";
-    file_name+=std::to_string(file_num_);
+    file_name+=std::to_string(file_num);
     file_name+=".log";
-    fd_=open(file_name.c_str(),O_WRONLY|O_CREAT|O_APPEND,S_IRUSR|S_IWUSR);
-    if(fd_<0)
-    return false;
-
-    return true;
+    return fopen(file_name.c_str(),"a+");
 }
-
-bool Loger::close_file()
+struct close_file
 {
-    int ret=close(fd_);
-    if(ret<0)
-    return false;
-    return true;
+    void operator()(FILE*fp)
+    {
+        if(fp)
+        {
+            if(fclose(fp)==EOF)
+            {
+                //日志
+            }
+        }
+    }
+};
+Loger::Loger()
+:file_num_(1),
+file_size_(0),
+stop_(0),
+fp_(nullptr,close_file())
+{
+    fp_.reset(get_fp(time_day_,file_num_,file_name_));
+    if(!fp_)
+    {
+        throw std::runtime_error("Loger::get_fp()");
+    }
+    buffers_write_.reserve(12);
+    setbuffer(fp_.get(),out_buffer_,OUT_BUFFER_SIZE);
 }
-
 Loger::~Loger()
 {
     if(thread_)
@@ -47,71 +57,114 @@ Loger::~Loger()
         stop_=1;
         thread_->join();
     }
-    if(close_file()==NULL)
+
+}
+void Loger::push(char *data,std::size_t len)//其他线程调用
+{
+    std::lock_guard<std::mutex> lock(mutex_);
+    if(cur_buffer_->avail()>=len)
     {
-        // 日志
+        cur_buffer_->push(data,len);
+    }
+    else
+    {
+        buffers_.push_back(std::move(cur_buffer_));
+        if(nex_buffer_)
+        {
+            swap(nex_buffer_,cur_buffer_); 
+        }
+        else
+        {
+            cur_buffer_.reset(new Logbuffer);
+        }
+        cur_buffer_->push(data,len);
+        cond_.notify_all();
     }
 }
-
-void Loger::push(Logstream &logstream)
+Loger& Loger::get_instance()
 {
-    deque_.push_back(std::move(logstream.data_));
+    static Loger loger;
+    return loger;
 }
-
-void Loger::run()
+void Loger::loop()
 {
     int err;
     bool timeout=0;
+    
     while(!stop_)
     {
-        Logstream::log_data log;
-        if(!deque_.pop_front(log,300))
-        timeout=1;
-        else
-        buffer_.cstr_read(log.buffer_.get(),log.len_);
-
-        if(stop_||timeout||buffer_.write_capacity() < Logstream::BUFFER_SIZE)
         {
-            tm now_day;
-            time_t now_time(NULL);
-            localtime_r(&now_time,&now_day);
+            std::unique_lock<std::mutex> lock(mutex_);
+            if(buffers_.empty())
+            {
+                cond_.wait_for(lock,std::chrono::seconds(2));
+            }
+            buffers_.push_back(std::move(cur_buffer_));
+     
+            cur_buffer_=std::move(buffer_n1_);
+            if(!nex_buffer_)
+            {
+                nex_buffer_=std::move(buffer_n2_);
+            }
+            swap(buffers_write_,buffers_);
+        }
+        write_to_file();
+    }
+    fflush_unlocked(fp_.get());
+}
 
-            if(now_day.tm_mday != day_.tm_mday||now_day.tm_mon != day_.tm_mon||now_day.tm_year != day_.tm_year)
-            {
-                int ret=open_file(now_day);
-                if(ret<0)
-                {
-                    throw std::runtime_error("Loger::run()");
-                }
-            }
-            int len=buffer_.fd_write(fd_,err);
-            if(len<0)
-            {
-                throw std::runtime_error("Loger::run()");
-            }
+void Loger::write_to_file()
+{
+    time_t now_day;
+    time(&now_day);
 
-            buffer_.clear();
-            file_size_+=len;
-            
-            if(file_size_ >= MAX_FILE_SIZE)
-            {
-                file_size_=0;  
-                file_num_++;
-                int ret=open_file(now_day);
-                if(ret<0)
-                {
-                    throw std::runtime_error("Loger::run()");
-                }
-            }
+    if(now_day/DAY_SECONDS != time_day_/DAY_SECONDS)
+    {
+        file_num_=1;
+        file_size_=0;
+        time_day_=now_day;
+        fp_.reset(get_fp(now_day,file_num_,file_name_));
+        if(!fp_)
+        {
+            throw std::runtime_error("Loger::get_fp()");
         }
     }
-
-
+    if(file_size_ >= MAX_FILE_SIZE)
+    {
+        file_num_++;
+        file_size_=0;
+        fp_.reset(get_fp(now_day,file_num_,file_name_));
+        if(!fp_)
+        {
+            throw std::runtime_error("Loger::get_fp()");
+        }
+    }
+    for(auto &buffer:buffers_write_)
+    {
+        fwrite_unlocked(buffer->data(),1,buffer->size(),fp_.get());//不用考虑线程安全
+        file_size_+=buffer->size();
+    }
+    if(buffers_write_.size()>2)
+    {
+        buffers_write_.resize(2);
+    }
+    if(!buffer_n1_)
+    {
+        std::swap(buffer_n1_,buffers_write_.back());
+        buffers_write_.pop_back();
+        buffer_n1_->clear();
+    }
+    if(!buffer_n2_)
+    {
+        std::swap(buffer_n2_,buffers_write_.back());
+        buffers_write_.pop_back();
+        buffer_n2_->clear();
+    }
+    fflush_unlocked(fp_.get());
 }
 
 void Loger::run_thread()
 {
-    thread_.reset(new std::thread(&Loger::run,this));
-    thread_->detach();
+    thread_.reset(new std::thread([this](){loop();}));
 }
 
