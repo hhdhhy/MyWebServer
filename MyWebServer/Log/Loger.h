@@ -9,9 +9,9 @@
 
 class Loger
 {
-
 public:
 
+    static std::atomic<Logstream::LogLevel> LOG_LEVEL;
     ~Loger();
     void push(char *data, std::size_t len);
     static Loger& get_instance();
@@ -21,7 +21,7 @@ private:
     static FILE* get_fp(time_t &time_day,std::size_t &file_num,std::string&file_name);
     void write_to_file();
     Loger();
-
+    
 
     static const std::size_t MAX_FILE_SIZE=1024*1024;
     static const std::size_t OUT_BUFFER_SIZE=64*1024;
@@ -50,6 +50,14 @@ private:
     std::unique_ptr<std::thread> thread_;
     std::atomic<bool> stop_;
 
+    
 };
-
-
+#define LOG_TRACE if (Loger::LOG_LEVEL <= Logstream::TRACE) \
+  Logstream(Logstream::TRACE,__FILE__,__LINE__,__FUNCTION__)
+#define LOG_DEBUG if (Loger::LOG_LEVEL <= Logstream::DEBUG) \
+  Logstream(Logstream::DEBUG,__FILE__,__LINE__,__FUNCTION__)
+#define LOG_INFO if (Loger::LOG_LEVEL <= Logstream::INFO) \
+  Logstream(Logstream::INFO,__FILE__,__LINE__,__FUNCTION__)
+#define LOG_WARN Logstream(Logstream::WARN,__FILE__,__LINE__,__FUNCTION__)
+#define LOG_ERROR Logstream(Logstream::ERROR,__FILE__,__LINE__,__FUNCTION__)
+#define LOG_FATAL Logstream(Logstream::FATAL,__FILE__,__LINE__,__FUNCTION__)

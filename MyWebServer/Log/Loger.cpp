@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <cstring>
 
+std::atomic<Logstream::LogLevel> Loger::LOG_LEVEL=Logstream::INFO;
 FILE* Loger::get_fp(time_t &time_day,std::size_t &file_num,std::string&file_name)
 {
     time(&time_day);
@@ -42,13 +43,14 @@ file_size_(0),
 stop_(0),
 fp_(nullptr,close_file())
 {
+    
     fp_.reset(get_fp(time_day_,file_num_,file_name_));
     if(!fp_)
     {
         throw std::runtime_error("Loger::get_fp()");
     }
     buffers_write_.reserve(12);
-    setbuffer(fp_.get(),out_buffer_,OUT_BUFFER_SIZE);
+    setbuffer(fp_.get(),out_buffer_,OUT_BUFFER_SIZE);//设置写文件缓冲区
 }
 Loger::~Loger()
 {
@@ -57,7 +59,6 @@ Loger::~Loger()
         stop_=1;
         thread_->join();
     }
-
 }
 void Loger::push(char *data,std::size_t len)//其他线程调用
 {
@@ -97,7 +98,7 @@ void Loger::loop()
             std::unique_lock<std::mutex> lock(mutex_);
             if(buffers_.empty())
             {
-                cond_.wait_for(lock,std::chrono::seconds(2));
+                cond_.wait_for(lock,std::chrono::seconds(2));//等两秒
             }
             buffers_.push_back(std::move(cur_buffer_));
      
@@ -141,9 +142,13 @@ void Loger::write_to_file()
     }
     for(auto &buffer:buffers_write_)
     {
-        fwrite_unlocked(buffer->data(),1,buffer->size(),fp_.get());//不用考虑线程安全
-        file_size_+=buffer->size();
+        if(buffer->size())
+        {
+            fwrite_unlocked(buffer->data(),1,buffer->size(),fp_.get());//不用考虑线程安全
+            file_size_+=buffer->size();
+        }
     }
+    
     if(buffers_write_.size()>2)
     {
         buffers_write_.resize(2);
