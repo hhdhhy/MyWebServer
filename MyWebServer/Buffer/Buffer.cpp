@@ -37,12 +37,12 @@ char *Buffer::write_addr()
 }
 char *Buffer::get_addr(std::size_t idx)
 {
-    if(idx>=buffer_.size())
+    if(idx>buffer_.size())
     return nullptr;
     return buffer_.data()+idx;
 }
 
-void Buffer::has_read(size_t len)
+void Buffer::commit_read(size_t len)
 {
     read_idx_+=len;
     if(read_idx_==write_idx_)
@@ -51,7 +51,7 @@ void Buffer::has_read(size_t len)
     }
 }
 
-void Buffer::has_write(size_t len)
+void Buffer::commit_write(size_t len)
 {
     write_idx_+=len;
 }
@@ -72,11 +72,11 @@ int Buffer::fd_read(int fd,int &err)
     }
     else if(len<=write_capacity())
     {
-        has_write(len);
+        commit_write(len);
     }
     else
     {
-        has_write(write_capacity());
+        commit_write(write_capacity());
         append(sta_buf,len-write_capacity());
     }
 
@@ -88,12 +88,12 @@ void Buffer::cstr_read(const char *str,size_t len)
     if(len<=write_capacity())
     {
         std::copy(str,str+len,write_addr());
-        has_write(len);
+        commit_write(len);
     }
     else
     {
         std::copy(str,str+write_capacity(),write_addr());
-        has_write(write_capacity());
+        commit_write(write_capacity());
         append(str,len-write_capacity());
     }
 }
@@ -111,7 +111,7 @@ void Buffer::append(const char *str, std::size_t len)
         buffer_.resize(buffer_.size()+len-write_capacity());
     }   
     std::copy(str,str+len,write_addr());
-    has_write(len);
+    commit_write(len);
 
 }
 int Buffer::fd_write(int fd,int& err)
@@ -122,7 +122,7 @@ int Buffer::fd_write(int fd,int& err)
         err=errno;
     }
     else
-    has_write(len);
+    commit_write(len);
 
     return len;
 }

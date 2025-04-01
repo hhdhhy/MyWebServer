@@ -31,8 +31,8 @@ private:
     char *write_addr();
  
 
-    void has_read(size_t len);
-    void has_write(size_t len);
+    void commit_read(size_t len);
+    void commit_write(size_t len);
 
     /* data */
     static const std::size_t INIT_BUFFER_SIZE = 1024*8;

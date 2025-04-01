@@ -6,8 +6,8 @@
 #include<string>
 
 static thread_local std::string THREAD_ID;
-time_t Logstream::LAST_TIME=NULL;
-char Logstream::LAST_TIME_STR[30];
+static thread_local time_t LAST_TIME=NULL;
+static thread_local char LAST_TIME_STR[30];
 const char* Logstream::level_str[LogLevel::LEVEL_COUNT] = {"TRACE","DEBUG","INFO","WARN","ERROR","FATAL"}; 
 
 Logstream::Logstream(LogLevel level,const char *file, int line,const char *func)
@@ -84,6 +84,12 @@ Logstream& Logstream::operator<<(const std::string& str)
 Logstream& Logstream::operator<<(int data)
 {
     int len=sprintf(get_buffer_addr(),"%d",data);
+    buffer_pushed(len);
+    return *this;
+}
+Logstream& Logstream::operator<<(long long data)
+{
+    int len=sprintf(get_buffer_addr(),"%lld",data);
     buffer_pushed(len);
     return *this;
 }

@@ -1,9 +1,9 @@
 #include"Channel.h"
 #include<unistd.h>
+#include"Loger.h"
 Channel::Channel(Loop* loop, int fd, int event=NONE_EVENT)
 : loop_(loop),fd_(fd),events_(event),is_in_epoll_(false)
 {
-
 }
 
 Channel::~Channel()
@@ -12,10 +12,17 @@ Channel::~Channel()
     disable_all();
     if(is_calling_)
     {
-        throw std::runtime_error("Channel::handle_all() is calling");
+        LOG_FATAL<<"Channel is calling";
     }
     if(fd_>=0)
-    close(fd_);
+    {
+        int ret=close(fd_);
+        if(ret<0)
+        {
+            LOG_ERROR<<" close fd error";
+        }
+    }
+    
 }
 
 void Channel::set_callback_read(const callback_function &callback)
@@ -82,14 +89,23 @@ void Channel::handle_do_all()
 void Channel::handle_all()
 {
     is_calling_ = true;
+
+    if((revents_ & EPOLLHUP)&&!(revents_ & EPOLLIN))
+    {
+        if(callback_close_)
+        {
+            callback_close_();
+        }
+    }
     if(revents_ & EPOLLERR)   
     {
+        LOG_ERROR<<"EPOLLERR on:"<<fd_;
         if(callback_error_)
         {
             callback_error_();
         }
     }
-    if(revents_ & (EPOLLIN||EPOLLHUP||EPOLLPRI))
+    if(revents_ & (EPOLLIN|EPOLLPRI))
     {
         if(callback_read_)
         {
@@ -103,13 +119,7 @@ void Channel::handle_all()
             callback_write_();
         }
     }
-    if(revents_ & EPOLLOUT)
-    {
-        if(callback_close_)
-        {
-            callback_close_();
-        }
-    }
+
     is_calling_ = false;
 }
 
