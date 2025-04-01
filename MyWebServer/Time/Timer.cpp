@@ -37,3 +37,18 @@ Timer::Timeus Timer::get_timeout()
 {
     return timeout_;
 }
+
+void Timer::run()
+{
+    callback_();
+}
+
+bool Timer::is_reapeat()
+{
+    return is_repeat_;
+}
+
+Timer::Timeus Timer::get_interval()
+{
+    return interval_;
+}

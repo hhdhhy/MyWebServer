@@ -2,6 +2,8 @@
 #include <functional>
 #include <sys/timerfd.h>
 #include <cstring>
+#include <unistd.h>
+#include "Loger.h"
 Timequeue::Timequeue(Loop* loop)
 :loop_(loop),timer_channel_(loop,get_timerfd())
 {
@@ -16,26 +18,53 @@ Timequeue::~Timequeue()
 
 void Timequeue::add_timer(Timer::Timeus timeout, Timer::callback_function callback, Timer::Timeus interval = 0)
 {
-    add_timer(std::make_shared<Timer>(timeout,callback,interval));
+    add_timer(std::move(Timer(timeout,callback,interval)));
 }
-void Timequeue::add_timer(std::shared_ptr<Timer> timer)
+void Timequeue::add_timer(Timer timer)
 {
-    loop_->add_run_callback(std::bind(&Timequeue::handle_add,this,timer));
+    loop_->add_run_callback([this,timer=std::move(timer)]() {handle_add(timer);});
 }
-void Timequeue::handle_add(std::shared_ptr<Timer> timer)
+void Timequeue::handle_add(Timer timer)
 {
     if(!loop_->is_loop_in_thread())
     {
         throw std::runtime_error("loop is not in thread");
     }
     add(timer);
+
 }
 
 void Timequeue::handle_timer()//读回调
 {
-    
+    uint64_t read_byte;
+    ssize_t readn = read(timer_channel_.get_fd(), &read_byte, sizeof(read_byte));
+    if(readn != sizeof(read_byte))
+    {
+        LOG_ERROR << "read timerfd error";
+    }
+
+    Timer::Timeus now = Timer::get_now();
+
+    std::vector<value_type> timeout_timer(std::move(get_timeout_timer()));
+    for(auto &timer:timeout_timer)
+    {
+        timer.second.run();
+    }
+    reset(timeout_timer,now);
 }
 
+void Timequeue::reset(std::vector<Timequeue::value_type> &timeout_timer,Timer::Timeus now)
+{
+    
+    for(auto &timer:timeout_timer)
+    {
+        if(timer.second.is_reapeat())
+        {
+            timer.second.reset_timeout(now);
+            add(std::move(timer.second));
+        }
+    }
+}
 int Timequeue::get_timerfd()
 {
     int timerfd = timerfd_create(CLOCK_MONOTONIC,TFD_NONBLOCK | TFD_CLOEXEC);
@@ -87,11 +116,11 @@ std::vector<Timequeue::value_type> Timequeue::get_timeout_timer()
     return timeout_timer;
 }
 
-void Timequeue::add(std::shared_ptr<Timer> timer)
+void Timequeue::add(Timer timer)
 {
-    std::pair<Timer::Timeus,std::shared_ptr<Timer>> timer_pair({timer->get_timeout(),timer});
+    Timer::Timeus timeout=timer.get_timeout();
+    std::pair<Timer::Timeus,Timer> timer_pair({timeout,std::move(timer)});
     timer_set_.insert(timer_pair);
-
-    if(*timer_set_.begin()==timer_pair)
-    reset_timeout(timer->get_timeout());
+    if((timer_set_.begin())->first==timeout)
+    reset_timeout(timeout);
 }

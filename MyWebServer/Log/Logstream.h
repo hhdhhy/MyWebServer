@@ -25,6 +25,7 @@ public:
 
     Logstream(LogLevel level,const char *file,int line,const char *func);
     ~Logstream();
+    
     Logstream &operator<<(const char data);
     Logstream& operator<<(const char *str);
     Logstream& operator<<(const cstr &str);
@@ -34,7 +35,6 @@ public:
     Logstream &operator<<(std::size_t data);
     Logstream& operator<<(const double data);
 
-    
     static const std::size_t BUFFER_SIZE = 256;
 private:
     

@@ -14,10 +14,13 @@ public:
     void reset_timeout();
     void reset_timeout(Timeus timeout);
     Timeus get_timeout();
+    void run();
+    bool is_reapeat();
+    Timer::Timeus get_interval();
 private:
 
+    
     callback_function callback_;
-
     Timeus timeout_;//超时时间
     Timeus interval_;//超时间隔
     bool is_repeat_;//是否重复
