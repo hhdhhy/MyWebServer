@@ -1,29 +1,30 @@
 #pragma once
-#include"Buffer.h"
 #include"Logbuffer.h"
 #include"Logstream.h"
 #include <memory>
 #include <thread>
 #include <condition_variable>
 #include <functional>
-
+#include  <vector>
+#include <atomic>
 class Loger
 {
 public:
 
-    static std::atomic<Logstream::LogLevel> LOG_LEVEL;
+    static Logstream::LogLevel get_log_level();
+    static void set_log_level(Logstream::LogLevel level);
+
     ~Loger();
-    void push(char *data, std::size_t len);
+    void push(char *data, std::size_t len,Logstream::LogLevel level);
     static Loger& get_instance();
     void loop();
     void run_thread();
 private:
-    static FILE* get_fp(time_t &time_day,std::size_t &file_num,std::string&file_name);
+    static FILE* get_fp(time_t &time_day,std::size_t &file_num,std::size_t &file_size,std::string&file_name);
     void write_to_file();
     Loger();
     
-
-    static const std::size_t MAX_FILE_SIZE=1024*1024;
+    static const std::size_t MAX_FILE_SIZE=1024*1024*40;
     static const std::size_t OUT_BUFFER_SIZE=64*1024;
 
     static const std::size_t DAY_SECONDS=24*60*60;
@@ -52,11 +53,11 @@ private:
 
     
 };
-#define LOG_TRACE if (Loger::LOG_LEVEL <= Logstream::TRACE) \
+#define LOG_TRACE if (Loger::get_log_level() <= Logstream::TRACE) \
   Logstream(Logstream::TRACE,__FILE__,__LINE__,__FUNCTION__)
-#define LOG_DEBUG if (Loger::LOG_LEVEL <= Logstream::DEBUG) \
+#define LOG_DEBUG if (Loger::get_log_level() <= Logstream::DEBUG) \
   Logstream(Logstream::DEBUG,__FILE__,__LINE__,__FUNCTION__)
-#define LOG_INFO if (Loger::LOG_LEVEL <= Logstream::INFO) \
+#define LOG_INFO if (Loger::get_log_level() <= Logstream::INFO) \
   Logstream(Logstream::INFO,__FILE__,__LINE__,__FUNCTION__)
 #define LOG_WARN Logstream(Logstream::WARN,__FILE__,__LINE__,__FUNCTION__)
 #define LOG_ERROR Logstream(Logstream::ERROR,__FILE__,__LINE__,__FUNCTION__)

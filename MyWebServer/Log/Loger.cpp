@@ -5,10 +5,12 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <cstring>
-
-std::atomic<Logstream::LogLevel> Loger::LOG_LEVEL=Logstream::INFO;
-FILE* Loger::get_fp(time_t &time_day,std::size_t &file_num,std::string&file_name)
+#include <thread>
+#include <iostream>
+static std::atomic<Logstream::LogLevel> LOG_LEVEL;
+FILE* Loger::get_fp(time_t &time_day,std::size_t &file_num,std::size_t &file_size, std::string&file_name)
 {
+
     time(&time_day);
     tm day;
     localtime_r(&time_day,&day);
@@ -22,7 +24,12 @@ FILE* Loger::get_fp(time_t &time_day,std::size_t &file_num,std::string&file_name
     file_name+="-";
     file_name+=std::to_string(file_num);
     file_name+=".log";
-    return fopen(file_name.c_str(),"a+");
+    FILE* fp=fopen(file_name.c_str(),"a+");
+
+    struct stat stat_buf;
+    stat(file_name.c_str(),&stat_buf);
+    file_size=stat_buf.st_size;
+    return fp;
 }
 struct close_file
 {
@@ -30,6 +37,7 @@ struct close_file
     {
         if(fp)
         {
+            fflush_unlocked(fp);
             if(fclose(fp)==EOF)
             {
                 LOG_ERROR<<"Loger::get_fp()";
@@ -37,21 +45,34 @@ struct close_file
         }
     }
 };
+Logstream::LogLevel Loger::get_log_level()
+{
+    return LOG_LEVEL.load();
+}
+void Loger::set_log_level(Logstream::LogLevel level)
+{
+    LOG_LEVEL.store(level);
+}
 Loger::Loger()
 :file_num_(1),
 file_size_(0),
 stop_(0),
-fp_(nullptr,close_file())
+fp_(nullptr,close_file()),
+cur_buffer_(new Logbuffer),
+nex_buffer_(new Logbuffer),
+buffer_n1_(new Logbuffer),
+buffer_n2_(new Logbuffer)
 {
-    
-    fp_.reset(get_fp(time_day_,file_num_,file_name_));
+    set_log_level(Logstream::INFO);
+    fp_.reset(get_fp(time_day_,file_num_,file_size_,file_name_));
     if(!fp_)
     {
-        throw std::runtime_error("Loger::get_fp()");
+        LOG_FATAL<<"Loger::get_fp()";
     }
     buffers_write_.reserve(12);
     setbuffer(fp_.get(),out_buffer_,OUT_BUFFER_SIZE);//设置写文件缓冲区
 }
+
 Loger::~Loger()
 {
     if(thread_)
@@ -60,9 +81,15 @@ Loger::~Loger()
         thread_->join();
     }
 }
-void Loger::push(char *data,std::size_t len)//可跨线程
+void Loger::push(char *data,std::size_t len,Logstream::LogLevel level)//可跨线程
 {
     std::lock_guard<std::mutex> lock(mutex_);
+    if(level==Logstream::FATAL)
+    {
+        fflush(fp_.get());
+        fwrite(data,1,len,stdout);
+        abort();
+    }
     if(cur_buffer_->avail()>=len)
     {
         cur_buffer_->push(data,len);
@@ -124,20 +151,20 @@ void Loger::write_to_file()
         file_num_=1;
         file_size_=0;
         time_day_=now_day;
-        fp_.reset(get_fp(now_day,file_num_,file_name_));
+        fp_.reset(get_fp(time_day_,file_num_,file_size_,file_name_));
         if(!fp_)
         {
-            throw std::runtime_error("Loger::get_fp()");
+            LOG_FATAL<<"Loger::get_fp()";
         }
     }
     if(file_size_ >= MAX_FILE_SIZE)
     {
         file_num_++;
         file_size_=0;
-        fp_.reset(get_fp(now_day,file_num_,file_name_));
+        fp_.reset(get_fp(now_day,file_num_,file_size_,file_name_));
         if(!fp_)
         {
-            throw std::runtime_error("Loger::get_fp()");
+            LOG_FATAL<<"Loger::get_fp()";
         }
     }
     for(auto &buffer:buffers_write_)
@@ -145,6 +172,7 @@ void Loger::write_to_file()
         if(buffer->size())
         {
             fwrite_unlocked(buffer->data(),1,buffer->size(),fp_.get());//不用考虑线程安全
+
             file_size_+=buffer->size();
         }
     }
@@ -170,6 +198,6 @@ void Loger::write_to_file()
 
 void Loger::run_thread()
 {
-    thread_.reset(new std::thread([this](){loop();}));//不用考虑线程安全
+    thread_.reset(new std::thread([this](){loop();}));
 }
 

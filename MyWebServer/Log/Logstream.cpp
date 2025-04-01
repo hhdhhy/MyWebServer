@@ -1,63 +1,50 @@
 #include"Logstream.h"
 #include<cstring>
 #include"Loger.h"
+#include"Timer.h"
+#include<sstream>
+#include<string>
+
+static thread_local std::string THREAD_ID;
+time_t Logstream::LAST_TIME=NULL;
+char Logstream::LAST_TIME_STR[30];
+const char* Logstream::level_str[LogLevel::LEVEL_COUNT] = {"TRACE","DEBUG","INFO","WARN","ERROR","FATAL"}; 
 
 Logstream::Logstream(LogLevel level,const char *file, int line,const char *func)
-:idx_(0)
+:idx_(0),
+level_(level)
 {
+    if(THREAD_ID.empty())
+    {
+        std::stringstream o;
+        o<<std::this_thread::get_id();
+        o>>THREAD_ID;
+    }
+    int len=sprintf(get_buffer_addr(),"%s__",THREAD_ID.c_str());
+    buffer_pushed(len);
     push_time();
-    operator<<("__");
-    push_level(level);
-    operator<<("__");
-    operator<<((cstr){file,strlen(file)});
-    operator<<("__");
-    operator<<(line);
-    operator<<("__");
-    operator<<((cstr){func,strlen(func)});
-    operator<<("__:");
+    len=sprintf(get_buffer_addr(),"__%s__%s__%d__%s__:",level_str[level],file,line,func);
+    buffer_pushed(len);
 }
 Logstream::~Logstream()
 {
     operator<<("\n");
-    Loger::get_instance().push(data_,idx_);
+    Loger::get_instance().push(data_,idx_,level_);
 }
 
 void Logstream::push_time()
 {
     time_t now = time(NULL);
-    tm time;
-    localtime_r(&now,&time);
-
-    int len=sprintf(get_buffer_addr(),"%d-%d-%d %d:%d:%d",time.tm_year+1900,time.tm_mon+1,time.tm_mday,time.tm_hour,time.tm_min,time.tm_sec);
-
-    buffer_pushed(len);
-}
-
-void Logstream::push_level(LogLevel level)
-{
-    switch (level)
+    if(LAST_TIME!=now)
     {
-    case LogLevel::DEBUG:
-        operator<<("DEBUG");
-        break;
-    case LogLevel::ERROR:
-        operator<<("ERROR");
-        break;
-    case LogLevel::FATAL:
-        operator<<("FATAL");
-        break;
-    case LogLevel::INFO:
-        operator<<("INFO");
-        break;
-    case LogLevel::TRACE:
-        operator<<("TRACE");
-        break;
-    case LogLevel::WARN:
-        operator<<("WARN");
-        break;
-    default:
-        operator<<("UNKNOWN");
+        LAST_TIME=now;
+        tm time;
+        localtime_r(&now,&time);
+        strftime(LAST_TIME_STR,sizeof(LAST_TIME_STR),"%Y-%m-%d %H:%M:%S",&time);
     }
+    Timer::Timeus now_timeus = Timer::get_now()%1000000;
+    int len=sprintf(get_buffer_addr(),"%s %lldus",LAST_TIME_STR,now_timeus);
+    buffer_pushed(len);
 }
 
 char* Logstream::get_buffer_addr()
@@ -74,30 +61,41 @@ Logstream& Logstream::operator<<(const char data)
 {
     int len=sprintf(get_buffer_addr(),"%c",data);
     buffer_pushed(len);
+    return *this;
 }
 Logstream& Logstream::operator<<(const char *str)
 {
     int len=sprintf(get_buffer_addr(),"%s",str);
     buffer_pushed(len);
+    return *this;
 }
 Logstream& Logstream::operator<<(const cstr &str)
 {
     int len=sprintf(get_buffer_addr(),"%.*s",str.len,str.str);
     buffer_pushed(len);
+    return *this;
 }
 Logstream& Logstream::operator<<(const std::string& str)
 {
     int len=sprintf(get_buffer_addr(),"%s",str.c_str());
     buffer_pushed(len);
+    return *this;
 }
-Logstream& Logstream::operator<<(const int data)
+Logstream& Logstream::operator<<(int data)
 {
     int len=sprintf(get_buffer_addr(),"%d",data);
     buffer_pushed(len);
+    return *this;
 }
-Logstream& Logstream::operator<<(const double data)
+Logstream &Logstream::operator<<( std::size_t data)
+{
+    int len=sprintf(get_buffer_addr(),"%ld",data);
+    buffer_pushed(len);
+    return *this;
+}
+Logstream &Logstream::operator<<(const double data)
 {
     int len=sprintf(get_buffer_addr(),"%f",data);
     buffer_pushed(len);
+    return *this;
 }
-
