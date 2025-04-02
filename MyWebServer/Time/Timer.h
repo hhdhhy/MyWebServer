@@ -15,7 +15,7 @@ public:
     void reset_timeout(Timeus timeout);
     Timeus get_timeout();
     void run();
-    bool is_reapeat();
+    bool is_repeat();
     Timer::Timeus get_interval();
 private:
 

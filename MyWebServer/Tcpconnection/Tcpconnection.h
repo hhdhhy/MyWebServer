@@ -40,7 +40,7 @@ public:
     void handle_close_write();
     void write_close();
 
-    
+    void set_state(State state);
 
     int get_connect_id();
     Loop* get_loop();

@@ -58,7 +58,7 @@ void Timequeue::reset(std::vector<Timequeue::value_type> &timeout_timer,Timer::T
     
     for(auto &timer:timeout_timer)
     {
-        if(timer.second.is_reapeat())
+        if(timer.second.is_repeat())
         {
             timer.second.reset_timeout(now);
             add(std::move(timer.second));
@@ -82,7 +82,7 @@ void Timequeue::reset_timeout(Timer::Timeus new_timeout)
     //itimerspec.it_interval：指定定时器的周期。如果定时器是单次触发，这个值应为 0。
     //itimerspec.it_value：指定定时器的初始启动时间。
 
-    Timer::Timeus dif_time_ms= new_timeout - timeout_;
+    Timer::Timeus dif_time_ms= new_timeout - Timer::get_now();
     if(dif_time_ms<0)
     {
         dif_time_ms = 1000;

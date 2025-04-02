@@ -5,15 +5,15 @@
 #include <system_error>
 #include<sys/epoll.h>
 #include<unistd.h>
+#include "Loger.h"
 Epoll::Epoll()
 : epoll_fd_(epoll_create1(EPOLL_CLOEXEC)),revents_(init_revent_size)
 {
     if(epoll_fd_ < 0)
     {
-        throw std::exception();
+        LOG_FATAL<<"epoll_create1 error";
     }
 }
-
 
 Epoll::~Epoll()
 {
@@ -31,9 +31,10 @@ void Epoll::poll(int timeout_ms,std::vector<Channel*>&active_channels)
 
     if(num_events < 0 && errno != EINTR)
     {
-        throw std::exception();
+        LOG_ERROR << "epoll wait error";
     }
 
+    LOG_INFO << "epoll wait num_events:" << num_events;
     for (int i = 0; i < num_events; i++)
     {
         int fd=revents_[i].data.fd;
@@ -41,9 +42,11 @@ void Epoll::poll(int timeout_ms,std::vector<Channel*>&active_channels)
         active_channels.push_back(channels_[fd]);
     }
 
+    
     if(num_events == revents_.size())
     {
         revents_.resize(revents_.size()*2);
+        LOG_INFO << "revents_ resize to " << revents_.size() ;
     }
 
 }
@@ -52,13 +55,13 @@ void Epoll::delete_channel(Channel* channel)
 {
     if(channels_.count(channel->get_fd())==0)
     {
-        throw std::exception();
+        LOG_WARN<<"not find channel";
     }
     else
     {
         if(epoll_ctl(epoll_fd_,EPOLL_CTL_DEL,channel->get_fd(),NULL) < 0)
         {
-            throw std::exception();
+            LOG_ERROR << "epoll_ctl del error";
         }
         else
         {
@@ -87,7 +90,7 @@ void Epoll::update_channel(Channel* channel)
          ev.data.fd=channel->get_fd();
          if(epoll_ctl(epoll_fd_,EPOLL_CTL_MOD,channel->get_fd(),&ev) < 0)
          {
-             throw std::exception();
+                LOG_ERROR << "epoll_ctl add error";
          }
     }
 }
@@ -101,7 +104,7 @@ void Epoll::add_channel(Channel* channel)
         ev.data.fd=channel->get_fd();
         if(epoll_ctl(epoll_fd_,EPOLL_CTL_ADD,channel->get_fd(),&ev) < 0)
         {
-            throw std::exception();
+            LOG_ERROR << "epoll_ctl add error";
         }
         else
         {
@@ -111,6 +114,6 @@ void Epoll::add_channel(Channel* channel)
     }
     else
     {
-        throw std::exception();
+        LOG_WARN<<"channel is in epoll";
     }
 }

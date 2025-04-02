@@ -43,7 +43,7 @@ void Timer::run()
     callback_();
 }
 
-bool Timer::is_reapeat()
+bool Timer::is_repeat()
 {
     return is_repeat_;
 }

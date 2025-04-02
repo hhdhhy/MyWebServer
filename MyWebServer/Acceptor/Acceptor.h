@@ -20,7 +20,7 @@ private:
     
     void listen();
 
-    std::shared_ptr<Channel> channel_;
+    Channel channel_;
     Loop* loop_;
 
     std::function<void(int,sockaddr_in)> connect_callback_;

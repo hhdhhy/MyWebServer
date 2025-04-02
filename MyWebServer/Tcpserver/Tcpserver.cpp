@@ -1,4 +1,5 @@
 #include "Tcpserver.h"
+#include "Loger.h"
 Tcpserver::Tcpserver(sockaddr_in addr)
 :loop_(),acceptor_(loop_,addr)
 {
@@ -56,6 +57,7 @@ void Tcpserver::handle_close(const std::shared_ptr<Tcpconnection> &conn)
 
 void Tcpserver::handle_close_mainthread(const std::shared_ptr<Tcpconnection> &conn)
 {
+    LOG_INFO<<"close in main loop... conn:"<<conn->get_connect_id();
     connections_.erase(conn->get_connect_id());//先从主线程删除conn
     conn->get_loop()->add_run_callback([conn](){ conn->handle_destroy();});//在io线程删除conn
 }
