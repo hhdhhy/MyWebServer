@@ -7,36 +7,45 @@
 thread_local Loop* is_oneloop_onethread = nullptr;
 
 Loop::Loop()
-    : epoll_(new Epoll),
-      running_(false),
-      thread_id_(std::this_thread::get_id()),
-      timequeue_(new Timequeue(this)),
-      wakeup_channel_(this, get_wakeup_fd()) {
+: epoll_(new Epoll),
+running_(false),
+thread_id_(std::this_thread::get_id()),
+timequeue_(new Timequeue(this)),
+wakeup_channel_(this, get_wakeup_fd()) 
+{
     LOG_INFO << "Initializing Loop object...";
-    if (is_oneloop_onethread == nullptr) {
+    if (is_oneloop_onethread == nullptr)
+    {
         is_oneloop_onethread = this;
-    } else {
+    } 
+    else 
+    {
         LOG_FATAL << "Only one loop allowed per thread. Exiting...";
     }
 }
 
-Loop::~Loop() {
+Loop::~Loop() 
+{
     LOG_INFO << "Destroying Loop object...";
     is_oneloop_onethread = nullptr;
 }
 
-void Loop::run() {
+void Loop::run() 
+{
     LOG_INFO << "Starting event loop...";
-    if (!is_loop_in_thread()) {
+    if (!is_loop_in_thread()) 
+    {
         LOG_ERROR << "Event loop is not running in the correct thread. Exiting...";
         std::exit(-1);
     }
 
     running_ = true;
-    while (!stop_) {
+    while (!stop_) 
+    {
         active_channels_.clear();
         epoll_->poll(MAX_EPOLL_TIME, active_channels_);
-        for (auto channel : active_channels_) {
+        for (auto channel : active_channels_) 
+        {
             channel->handle_all();
         }
         run_wait_callbacks();
@@ -45,78 +54,98 @@ void Loop::run() {
     LOG_INFO << "Event loop stopped.";
 }
 
-void Loop::stop() {
+void Loop::stop() 
+{
     LOG_INFO << "Stopping event loop...";
     stop_ = true;
-    if (!is_loop_in_thread()) {
+    if (!is_loop_in_thread()) 
+    {
         wakeup();
     }
 }
 
-void Loop::add_channel(Channel* channel) {
-    if (!is_loop_in_thread()) {
+void Loop::add_channel(Channel* channel) 
+{
+    if (!is_loop_in_thread()) 
+    {
         LOG_ERROR << "Attempted to add channel from a different thread. Exiting...";
         std::exit(-1);
     }
-    if (!is_channel_in_loop(channel)) {
+    if (!is_channel_in_loop(channel)) 
+    {
         LOG_ERROR << "Channel does not belong to this loop. Exiting...";
         std::exit(-1);
     }
     epoll_->add_channel(channel);
 }
 
-void Loop::remove_channel(Channel* channel) {
-    if (!is_loop_in_thread()) {
+void Loop::remove_channel(Channel* channel)
+ {
+    if (!is_loop_in_thread()) 
+    {
         LOG_ERROR << "Attempted to remove channel from a different thread. Exiting...";
         std::exit(-1);
     }
-    if (!is_channel_in_loop(channel)) {
+    if (!is_channel_in_loop(channel)) 
+    {
         LOG_ERROR << "Channel does not belong to this loop. Exiting...";
         std::exit(-1);
     }
     epoll_->delete_channel(channel);
 }
 
-void Loop::update_channel(Channel* channel) {
-    if (!is_loop_in_thread()) {
+void Loop::update_channel(Channel* channel) 
+{
+    if (!is_loop_in_thread())
+    {
         LOG_ERROR << "Attempted to update channel from a different thread. Exiting...";
         std::exit(-1);
     }
-    if (!is_channel_in_loop(channel)) {
+    if (!is_channel_in_loop(channel)) 
+    {
         LOG_ERROR << "Channel does not belong to this loop. Exiting...";
         std::exit(-1);
     }
     epoll_->update_channel(channel);
 }
 
-bool Loop::is_loop_in_thread() {
+bool Loop::is_loop_in_thread() 
+{
     return thread_id_ == std::this_thread::get_id();
 }
 
-bool Loop::is_channel_in_loop(Channel* channel) {
+bool Loop::is_channel_in_loop(Channel* channel) 
+{
     return channel->get_loop() == this;
 }
 
-void Loop::add_timer(Timer::Timeus timeout, Timer::callback_function callback, Timer::Timeus interval) {
+void Loop::add_timer(Timer::Timeus timeout, Timer::callback_function callback, Timer::Timeus interval) 
+{
     LOG_INFO << "Adding timer with timeout: " << timeout << ", interval: " << interval;
     timequeue_->add_timer(timeout, callback, interval);
 }
 
-void Loop::add_run_callback(const Timer::callback_function& cbf) {
-    if (is_loop_in_thread()) {
+void Loop::add_run_callback(const Timer::callback_function& cbf) 
+{
+    if (is_loop_in_thread()) 
+    {
         cbf();
-    } else {
+    } 
+    else 
+    {
         {
             std::lock_guard<std::mutex> lock(wait_callbacks_mutex_);
             wait_callbacks_.push_back(cbf);
         }
-        if (!is_loop_in_thread() || has_wait_callbacks_) {
+        if (!is_loop_in_thread() || has_wait_callbacks_) 
+        {
             wakeup();
         }
     }
 }
 
-void Loop::run_wait_callbacks() {
+void Loop::run_wait_callbacks() 
+{
     LOG_INFO << "Running pending callbacks...";
     has_wait_callbacks_ = true;
     std::vector<callback_function> callbacks;
@@ -125,7 +154,8 @@ void Loop::run_wait_callbacks() {
         swap(callbacks, wait_callbacks_);
     }
 
-    for (auto& cbf : callbacks) {
+    for (auto& cbf : callbacks) 
+    {
         cbf();
     }
     has_wait_callbacks_ = false;
@@ -135,24 +165,29 @@ void Loop::run_wait_callbacks() {
 int Loop::get_wakeup_fd() {
     LOG_INFO << "Creating wakeup eventfd...";
     int fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
-    if (fd < 0) {
+    if (fd < 0) 
+    {
         LOG_ERROR << "Failed to create eventfd. Exiting...";
         std::exit(-1);
     }
     return fd;
 }
 
-void Loop::handle_wakeup() {
-    if (wakeup() <= 0) {
+void Loop::handle_wakeup() 
+{
+    if (wakeup() <= 0) 
+    {
         LOG_ERROR << "Failed to handle wakeup. Exiting...";
         std::exit(-1);
     }
 }
 
-int Loop::wakeup() {
+int Loop::wakeup() 
+{
     char p = 1;
     int len;
-    if ((len = write(wakeup_channel_.get_fd(), &p, sizeof(p))) <= 0) {
+    if ((len = write(wakeup_channel_.get_fd(), &p, sizeof(p))) <= 0) 
+    {
         LOG_ERROR << "Write error occurred during wakeup.";
     }
     return len;
