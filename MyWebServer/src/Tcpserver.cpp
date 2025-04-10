@@ -57,9 +57,9 @@ void Tcpserver::handle_connect(int fd, sockaddr_in addr)
     connection->set_callback_highwater_write(callback_highwater_write_);
     connection->set_callback_complete_write(callback_complete_write_);
     connection->set_callback_close([this](const std::shared_ptr<Tcpconnection> &conn){handle_close(conn);});
-    LOG_DEBUG<<"io loop:"<<ioloop->wakeup_channel_.get_fd()<<" handle_connect()";
-    LOG_DEBUG<<"loop:"<<loop_->wakeup_channel_.get_fd()<<" handle_connect()";
-    ioloop->add_run_callback([connection](){LOG_DEBUG<<"handle_connect()";    connection->handle_connect();});//io线程中执行
+    LOG_DEBUG<<"io loop:"<<ioloop->wakeup_channel_.get_fd();
+    LOG_DEBUG<<"loop:"<<loop_->wakeup_channel_.get_fd();
+    ioloop->add_run_callback([connection](){LOG_DEBUG<<"add_run_callbackhandle_connect()";connection->handle_connect();});//io线程中执行
 }
 
 

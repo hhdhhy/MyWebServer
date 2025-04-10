@@ -100,6 +100,7 @@ void Epoll::add_channel(Channel* channel)
 {
     if(channels_.find(channel->get_fd())==channels_.end())
     {
+        LOG_DEBUG << "add channel";
         epoll_event ev;
         ev.events=channel->get_events();
         ev.data.fd=channel->get_fd();

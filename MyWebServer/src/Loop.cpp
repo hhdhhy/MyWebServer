@@ -24,6 +24,8 @@ wakeup_channel_(this, get_wakeup_fd())
         LOG_FATAL << "Only one loop allowed per thread. Exiting...";
     }
     timequeue_.reset(new Timequeue(this));
+    wakeup_channel_.enable_read();
+    // epoll_->add_channel(&wakeup_channel_);
 }
 
 Loop::~Loop() 
@@ -137,13 +139,15 @@ void Loop::add_run_callback(const Timer::callback_function& cbf)
     else 
     {
         {
-            LOG_DEBUG << "Adding run callback...";
             std::lock_guard<std::mutex> lock(wait_callbacks_mutex_);
+            LOG_DEBUG << "Adding run callback...";
             wait_callbacks_.push_back(cbf);
             LOG_DEBUG << "wait_callbacks_.size():"<<wait_callbacks_.size();
+
         }
         if (!is_loop_in_thread() || has_wait_callbacks_) 
         {
+            LOG_DEBUG << "wait_callbacks_.size():"<<wait_callbacks_.size();
             handle_wakeup() ;
         }
     }
@@ -158,7 +162,9 @@ void Loop::run_wait_callbacks()
     }
     LOG_INFO << "Running pending callbacks...";
     has_wait_callbacks_ = true;
+    LOG_DEBUG<<"loop:"<<wakeup_channel_.get_fd();
     LOG_DEBUG<< "Callbacks size:"<<wait_callbacks_.size();
+    
     std::vector<callback_function> callbacks;
     {
         std::lock_guard<std::mutex> lock(wait_callbacks_mutex_);
