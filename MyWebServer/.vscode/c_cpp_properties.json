@@ -3,9 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/Acceptor",
-                "${workspaceFolder}/Threadpool"
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/src"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/g++",

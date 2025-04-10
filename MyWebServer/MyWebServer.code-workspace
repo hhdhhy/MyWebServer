@@ -82,7 +82,8 @@
 			"valarray": "cpp",
 			"variant": "cpp",
 			"buffer": "cpp",
-			"netfwd": "cpp"
+			"netfwd": "cpp",
+			"cerrno": "cpp"
 		}
 	}
 }
