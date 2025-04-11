@@ -4,6 +4,7 @@
 #include <netinet/in.h>
 #include <stdexcept>
 #include "Loger.h"
+#include <cstring>
 Acceptor::Acceptor(Loop* loop, sockaddr_in addr)
 : loop_(loop),
 channel_(loop,get_socket_fd())
@@ -31,8 +32,10 @@ Acceptor::~Acceptor()
 void Acceptor::handle_accept()
 {
     sockaddr_in addr;
+    memset(&addr, 0, sizeof(addr));
     socklen_t len=sizeof(addr);
     int connfd=accept4(channel_.get_fd(),reinterpret_cast<sockaddr*>(&addr),&len,SOCK_NONBLOCK|SOCK_CLOEXEC);
+    LOG_DEBUG<<"accept fd:"<<connfd;
     if(connfd<0)
     {
         LOG_ERROR<<"accept error";

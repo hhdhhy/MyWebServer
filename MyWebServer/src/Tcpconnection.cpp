@@ -165,14 +165,18 @@ void Tcpconnection::handle_write()
 
 void Tcpconnection::handle_close()
 {
+    LOG_DEBUG<<"close fd:"<<channel_.get_fd();
     set_state(State::CLOSED);
     channel_.disable_all();
+    callback_connect_(shared_from_this());
     callback_close_(shared_from_this());//实际调用handle_destroy（保证自己在主线程中被删除（不跨线程））
 
 }
 
 void Tcpconnection::handle_error()
 {
+    LOG_DEBUG<<"error fd:"<<channel_.get_fd();
+
     int opt;
     socklen_t optlen = sizeof(opt);
     if(getsockopt(channel_.get_fd(),SOL_SOCKET,SO_ERROR,&opt,&optlen)<0)

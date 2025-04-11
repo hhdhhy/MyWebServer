@@ -39,8 +39,11 @@ void Epoll::poll(int timeout_ms,std::vector<Channel*>&active_channels)
     for (int i = 0; i < num_events; i++)
     {
         int fd=revents_[i].data.fd;
+        LOG_DEBUG<<"epoll wait fd:" << fd ;
         channels_[fd]->set_revents(revents_[i].events);
         active_channels.push_back(channels_[fd]);
+        revents_[i].events=0;
+        revents_[i].data.fd=0;
     }
 
     
@@ -49,7 +52,7 @@ void Epoll::poll(int timeout_ms,std::vector<Channel*>&active_channels)
         revents_.resize(revents_.size()*2);
         LOG_INFO << "revents_ resize to " << revents_.size() ;
     }
-
+    
 }
 
 void Epoll::delete_channel(Channel* channel)

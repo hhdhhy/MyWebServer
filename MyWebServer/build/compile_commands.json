@@ -1,0 +1,77 @@
+[
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Acceptor.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Acceptor.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Acceptor.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Buffer.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Buffer.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Buffer.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Channel.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Channel.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Channel.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Epoll.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Epoll.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Epoll.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Logbuffer.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Logbuffer.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Logbuffer.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Loger.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Loger.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Loger.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Logstream.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Logstream.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Logstream.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Loop.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Loop.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Loop.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Loopthread.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Loopthread.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Loopthread.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Loopthreadpool.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Loopthreadpool.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Loopthreadpool.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Tcpconnection.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Tcpserver.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Timequeue.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Timequeue.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Timequeue.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/src/Timer.cpp.o -c /home/hhdhh/learning/MyWebServer/src/Timer.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/src/Timer.cpp"
+},
+{
+  "directory": "/home/hhdhh/learning/MyWebServer/build",
+  "command": "/usr/bin/g++   -I/home/hhdhh/learning/MyWebServer/include  -g -O0   -o CMakeFiles/server_test.dir/example/EchoServer.cpp.o -c /home/hhdhh/learning/MyWebServer/example/EchoServer.cpp",
+  "file": "/home/hhdhh/learning/MyWebServer/example/EchoServer.cpp"
+}
+]

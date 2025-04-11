@@ -25,6 +25,7 @@ wakeup_channel_(this, get_wakeup_fd())
     }
     timequeue_.reset(new Timequeue(this));
     wakeup_channel_.enable_read();
+    wakeup_channel_.set_callback_read(std::bind(&Loop::handle_getup, this));
     // epoll_->add_channel(&wakeup_channel_);
 }
 
@@ -191,6 +192,15 @@ int Loop::get_wakeup_fd() {
     LOG_INFO << "Creating wakeup eventfd..fd:"<<fd;
 
     return fd;
+}
+void Loop::handle_getup() 
+{
+    uint64_t p = 1;
+    int len = read(wakeup_channel_.get_fd(), &p, sizeof(p));
+    if (len != sizeof(p))
+    {
+        LOG_ERROR<<"EventLoop::handleRead() reads"<<len<<"bytes instead of 8";
+    }
 }
 
 void Loop::handle_wakeup() 

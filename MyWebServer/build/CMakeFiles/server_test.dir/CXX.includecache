@@ -6,6 +6,24 @@
 
 #IncludeRegexTransform: 
 
+../include/Acceptor.h
+Channel.h
+../include/Channel.h
+Loop.h
+../include/Loop.h
+memory
+-
+netinet/in.h
+-
+
+../include/Buffer.h
+vector
+-
+string
+-
+atomic
+-
+
 ../include/Channel.h
 sys/epoll.h
 -
@@ -14,14 +32,6 @@ functional
 memory
 -
 atomic
--
-
-../include/Epoll.h
-sys/epoll.h
--
-vector
--
-unordered_map
 -
 
 ../include/Logbuffer.h
@@ -68,6 +78,16 @@ Timequeue.h
 mutex
 -
 
+../include/Tcpconnection.h
+Buffer.h
+../include/Buffer.h
+Acceptor.h
+../include/Acceptor.h
+functional
+-
+Timer.h
+../include/Timer.h
+
 ../include/Timequeue.h
 Timer.h
 ../include/Timer.h
@@ -88,21 +108,11 @@ functional
 sys/time.h
 -
 
-/home/hhdhh/learning/MyWebServer/src/Loop.cpp
-Loop.h
-/home/hhdhh/learning/MyWebServer/src/Loop.h
-thread
--
+/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp
+Tcpconnection.h
+/home/hhdhh/learning/MyWebServer/src/Tcpconnection.h
 unistd.h
--
-sys/eventfd.h
 -
 Loger.h
 /home/hhdhh/learning/MyWebServer/src/Loger.h
-Channel.h
-/home/hhdhh/learning/MyWebServer/src/Channel.h
-Epoll.h
-/home/hhdhh/learning/MyWebServer/src/Epoll.h
-cstring
--
 

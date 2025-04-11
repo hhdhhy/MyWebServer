@@ -27,7 +27,9 @@ public:
     void add_run_callback(const callback_function &cbf);// 添加一个回调函数，在loop中执行
     void run_wait_callbacks();
 
-    static int get_wakeup_fd();// 获取用于唤醒的eventfd
+    static int get_wakeup_fd();
+    void handle_getup();
+    // 获取用于唤醒的eventfd
     void handle_wakeup();// 读回调
     int wakeup();// 可以被其他线程调用来唤醒loop（因为loop阻塞在epoll_wait）
     Channel wakeup_channel_;

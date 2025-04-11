@@ -1,0 +1,184 @@
+140072701142912__2025-04-11 07:44:37 678194us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__192__get_wakeup_fd__:Creating wakeup eventfd..fd:4
+140072701142912__2025-04-11 07:44:37 678212us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__17__Loop__:Initializing Loop object...
+140072701142912__2025-04-11 07:44:37 678223us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072701142912__2025-04-11 07:44:37 678246us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072701142912__2025-04-11 07:44:37 678264us__DEBUG__/home/hhdhh/learning/MyWebServer/example/EchoServer.cpp__63__main__:Server Start
+140072692745984__2025-04-11 07:44:37 678526us__INFO__/home/hhdhh/learning/MyWebServer/src/Loopthread.cpp__32__run_loop__:geting loop in thread
+140072692745984__2025-04-11 07:44:37 678545us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__192__get_wakeup_fd__:Creating wakeup eventfd..fd:8
+140072692745984__2025-04-11 07:44:37 678556us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__17__Loop__:Initializing Loop object...
+140072692745984__2025-04-11 07:44:37 678563us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072692745984__2025-04-11 07:44:37 678573us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072692745984__2025-04-11 07:44:37 678614us__INFO__/home/hhdhh/learning/MyWebServer/src/Loopthread.cpp__39__run_loop__:run_loop
+140072692745984__2025-04-11 07:44:37 678617us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__40__run__:Starting event loop...
+140072684353280__2025-04-11 07:44:37 678898us__INFO__/home/hhdhh/learning/MyWebServer/src/Loopthread.cpp__32__run_loop__:geting loop in thread
+140072684353280__2025-04-11 07:44:37 678914us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__192__get_wakeup_fd__:Creating wakeup eventfd..fd:11
+140072684353280__2025-04-11 07:44:37 678923us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__17__Loop__:Initializing Loop object...
+140072684353280__2025-04-11 07:44:37 678929us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072684353280__2025-04-11 07:44:37 678936us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072684353280__2025-04-11 07:44:37 678958us__INFO__/home/hhdhh/learning/MyWebServer/src/Loopthread.cpp__39__run_loop__:run_loop
+140072684353280__2025-04-11 07:44:37 678960us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__40__run__:Starting event loop...
+140072675960576__2025-04-11 07:44:37 679133us__INFO__/home/hhdhh/learning/MyWebServer/src/Loopthread.cpp__32__run_loop__:geting loop in thread
+140072675960576__2025-04-11 07:44:37 679152us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__192__get_wakeup_fd__:Creating wakeup eventfd..fd:14
+140072675960576__2025-04-11 07:44:37 679164us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__17__Loop__:Initializing Loop object...
+140072675960576__2025-04-11 07:44:37 679171us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072675960576__2025-04-11 07:44:37 679182us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072675960576__2025-04-11 07:44:37 679302us__INFO__/home/hhdhh/learning/MyWebServer/src/Loopthread.cpp__39__run_loop__:run_loop
+140072675960576__2025-04-11 07:44:37 679305us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__40__run__:Starting event loop...
+140072667567872__2025-04-11 07:44:37 679384us__INFO__/home/hhdhh/learning/MyWebServer/src/Loopthread.cpp__32__run_loop__:geting loop in thread
+140072667567872__2025-04-11 07:44:37 679403us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__192__get_wakeup_fd__:Creating wakeup eventfd..fd:17
+140072667567872__2025-04-11 07:44:37 679415us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__17__Loop__:Initializing Loop object...
+140072667567872__2025-04-11 07:44:37 679422us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072667567872__2025-04-11 07:44:37 679432us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072667567872__2025-04-11 07:44:37 679471us__INFO__/home/hhdhh/learning/MyWebServer/src/Loopthread.cpp__39__run_loop__:run_loop
+140072667567872__2025-04-11 07:44:37 679473us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__40__run__:Starting event loop...
+140072701142912__2025-04-11 07:44:37 679553us__INFO__/home/hhdhh/learning/MyWebServer/src/Acceptor.cpp__79__listen__:listening fd:7
+140072701142912__2025-04-11 07:44:37 679560us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072701142912__2025-04-11 07:44:37 679635us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__40__run__:Starting event loop...
+140072701142912__2025-04-11 07:44:45 429315us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072701142912__2025-04-11 07:44:45 429325us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:7
+140072701142912__2025-04-11 07:44:45 429351us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Acceptor.cpp__38__handle_accept__:accept fd:20
+140072701142912__2025-04-11 07:44:45 429366us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Acceptor.cpp__49__handle_accept__:fd:20
+140072701142912__2025-04-11 07:44:45 429419us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__20__Tcpconnection__:create tcp connection fd:20
+140072701142912__2025-04-11 07:44:45 429427us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp__51__handle_connect__:accept in main loop... fd:20 addr:192.168.174.129
+140072701142912__2025-04-11 07:44:45 429433us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp__60__handle_connect__:io loop:11
+140072701142912__2025-04-11 07:44:45 429435us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp__61__handle_connect__:loop:4
+140072701142912__2025-04-11 07:44:45 429437us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__144__add_run_callback__:Adding run callback...
+140072701142912__2025-04-11 07:44:45 429440us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__146__add_run_callback__:wait_callbacks_.size():1
+140072701142912__2025-04-11 07:44:45 429441us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__151__add_run_callback__:wait_callbacks_.size():1
+140072701142912__2025-04-11 07:44:45 429442us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__219__wakeup__:Waking up event loop... fd:11
+140072701142912__2025-04-11 07:44:45 429495us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072701142912__2025-04-11 07:44:45 429498us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:4
+140072701142912__2025-04-11 07:44:45 429499us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:0
+140072701142912__2025-04-11 07:44:45 429502us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:0
+140072701142912__2025-04-11 07:44:45 429504us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.
+140072684353280__2025-04-11 07:44:45 429630us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072684353280__2025-04-11 07:44:45 429638us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:11
+140072684353280__2025-04-11 07:44:45 429655us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072684353280__2025-04-11 07:44:45 429657us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:11
+140072684353280__2025-04-11 07:44:45 429659us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:1
+140072684353280__2025-04-11 07:44:45 429662us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:1
+140072684353280__2025-04-11 07:44:45 429664us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__177__run_wait_callbacks__:Executing callback...-1794943576035188974
+140072684353280__2025-04-11 07:44:45 429668us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp__62__operator()__:add_run_callbackhandle_connect()
+140072684353280__2025-04-11 07:44:45 429670us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__100__handle_connect__:connect fd:20
+140072684353280__2025-04-11 07:44:45 429676us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072684353280__2025-04-11 07:44:45 429689us__INFO__/home/hhdhh/learning/MyWebServer/example/EchoServer.cpp__32__onConnection__:Connection UP :192.168.174.129
+140072684353280__2025-04-11 07:44:45 429692us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.
+140072701142912__2025-04-11 07:44:55 382172us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072701142912__2025-04-11 07:44:55 382181us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:7
+140072701142912__2025-04-11 07:44:55 382203us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Acceptor.cpp__38__handle_accept__:accept fd:21
+140072701142912__2025-04-11 07:44:55 382206us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Acceptor.cpp__49__handle_accept__:fd:21
+140072701142912__2025-04-11 07:44:55 382344us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__20__Tcpconnection__:create tcp connection fd:21
+140072701142912__2025-04-11 07:44:55 382357us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp__51__handle_connect__:accept in main loop... fd:21 addr:192.168.174.129
+140072701142912__2025-04-11 07:44:55 382368us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp__60__handle_connect__:io loop:14
+140072701142912__2025-04-11 07:44:55 382371us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp__61__handle_connect__:loop:4
+140072701142912__2025-04-11 07:44:55 382374us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__144__add_run_callback__:Adding run callback...
+140072701142912__2025-04-11 07:44:55 382379us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__146__add_run_callback__:wait_callbacks_.size():1
+140072701142912__2025-04-11 07:44:55 382381us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__151__add_run_callback__:wait_callbacks_.size():1
+140072701142912__2025-04-11 07:44:55 382383us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__219__wakeup__:Waking up event loop... fd:14
+140072701142912__2025-04-11 07:44:55 382401us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072701142912__2025-04-11 07:44:55 382404us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:4
+140072701142912__2025-04-11 07:44:55 382405us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:0
+140072701142912__2025-04-11 07:44:55 382407us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:0
+140072701142912__2025-04-11 07:44:55 382409us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.
+140072675960576__2025-04-11 07:44:55 382429us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072675960576__2025-04-11 07:44:55 382431us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:14
+140072675960576__2025-04-11 07:44:55 382440us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072675960576__2025-04-11 07:44:55 382441us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:14
+140072675960576__2025-04-11 07:44:55 382443us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:1
+140072675960576__2025-04-11 07:44:55 382445us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:1
+140072675960576__2025-04-11 07:44:55 382446us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__177__run_wait_callbacks__:Executing callback...-1794943576035188974
+140072675960576__2025-04-11 07:44:55 382449us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp__62__operator()__:add_run_callbackhandle_connect()
+140072675960576__2025-04-11 07:44:55 382451us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__100__handle_connect__:connect fd:21
+140072675960576__2025-04-11 07:44:55 382455us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__106__add_channel__:add channel
+140072675960576__2025-04-11 07:44:55 382466us__INFO__/home/hhdhh/learning/MyWebServer/example/EchoServer.cpp__32__onConnection__:Connection UP :192.168.174.129
+140072675960576__2025-04-11 07:44:55 382468us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.
+140072675960576__2025-04-11 07:45:03 316485us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072675960576__2025-04-11 07:45:03 316493us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:21
+140072675960576__2025-04-11 07:45:03 316548us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__64__handle_read__:read from fd: 21 len: 5 err: 0
+140072675960576__2025-04-11 07:45:03 316567us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__133__handle_send__:write complete
+140072675960576__2025-04-11 07:45:03 316570us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072675960576__2025-04-11 07:45:03 316571us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:14
+140072675960576__2025-04-11 07:45:03 316572us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:0
+140072675960576__2025-04-11 07:45:03 316575us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:0
+140072675960576__2025-04-11 07:45:03 316576us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.
+140072684353280__2025-04-11 07:45:16 418918us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072684353280__2025-04-11 07:45:16 418927us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:20
+140072684353280__2025-04-11 07:45:16 418989us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__64__handle_read__:read from fd: 20 len: 5 err: 0
+140072684353280__2025-04-11 07:45:16 419223us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__133__handle_send__:write complete
+140072684353280__2025-04-11 07:45:16 419237us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072684353280__2025-04-11 07:45:16 419239us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:11
+140072684353280__2025-04-11 07:45:16 419242us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:0
+140072684353280__2025-04-11 07:45:16 419245us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:0
+140072684353280__2025-04-11 07:45:16 419247us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.
+140072684353280__2025-04-11 07:45:19 337402us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072684353280__2025-04-11 07:45:19 337412us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:20
+140072684353280__2025-04-11 07:45:19 337429us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__64__handle_read__:read from fd: 20 len: 0 err: 0
+140072684353280__2025-04-11 07:45:19 337432us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__168__handle_close__:close fd:20
+140072684353280__2025-04-11 07:45:19 337444us__INFO__/home/hhdhh/learning/MyWebServer/example/EchoServer.cpp__36__onConnection__:Connection DOWN :192.168.174.129
+140072684353280__2025-04-11 07:45:19 337450us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__144__add_run_callback__:Adding run callback...
+140072684353280__2025-04-11 07:45:19 337453us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__146__add_run_callback__:wait_callbacks_.size():1
+140072684353280__2025-04-11 07:45:19 337455us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__151__add_run_callback__:wait_callbacks_.size():1
+140072684353280__2025-04-11 07:45:19 337457us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__219__wakeup__:Waking up event loop... fd:4
+140072684353280__2025-04-11 07:45:19 337513us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072684353280__2025-04-11 07:45:19 337515us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:11
+140072684353280__2025-04-11 07:45:19 337517us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:0
+140072684353280__2025-04-11 07:45:19 337519us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:0
+140072684353280__2025-04-11 07:45:19 337521us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.
+140072701142912__2025-04-11 07:45:19 337561us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072701142912__2025-04-11 07:45:19 337569us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:4
+140072701142912__2025-04-11 07:45:19 337580us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072701142912__2025-04-11 07:45:19 337582us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:4
+140072701142912__2025-04-11 07:45:19 337582us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:1
+140072701142912__2025-04-11 07:45:19 337584us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:1
+140072701142912__2025-04-11 07:45:19 337585us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__177__run_wait_callbacks__:Executing callback...-8878839441105405659
+140072701142912__2025-04-11 07:45:19 337588us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp__74__handle_close_mainthread__:close in main loop... conn:0
+140072701142912__2025-04-11 07:45:19 337596us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__144__add_run_callback__:Adding run callback...
+140072701142912__2025-04-11 07:45:19 337599us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__146__add_run_callback__:wait_callbacks_.size():1
+140072701142912__2025-04-11 07:45:19 337600us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__151__add_run_callback__:wait_callbacks_.size():1
+140072701142912__2025-04-11 07:45:19 337601us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__219__wakeup__:Waking up event loop... fd:11
+140072701142912__2025-04-11 07:45:19 337627us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.
+140072684353280__2025-04-11 07:45:19 337705us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072684353280__2025-04-11 07:45:19 337708us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:11
+140072684353280__2025-04-11 07:45:19 337713us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072684353280__2025-04-11 07:45:19 337715us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:11
+140072684353280__2025-04-11 07:45:19 337716us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:1
+140072684353280__2025-04-11 07:45:19 337718us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:1
+140072684353280__2025-04-11 07:45:19 337719us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__177__run_wait_callbacks__:Executing callback...-2015732134660278884
+140072684353280__2025-04-11 07:45:19 337722us__WARN__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__62__delete_channel__:not find channel
+140072684353280__2025-04-11 07:45:19 337724us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.
+140072675960576__2025-04-11 07:45:39 179009us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072675960576__2025-04-11 07:45:39 179020us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:21
+140072675960576__2025-04-11 07:45:39 179039us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__64__handle_read__:read from fd: 21 len: 0 err: 0
+140072675960576__2025-04-11 07:45:39 179043us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Tcpconnection.cpp__168__handle_close__:close fd:21
+140072675960576__2025-04-11 07:45:39 179091us__INFO__/home/hhdhh/learning/MyWebServer/example/EchoServer.cpp__36__onConnection__:Connection DOWN :192.168.174.129
+140072675960576__2025-04-11 07:45:39 179097us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__144__add_run_callback__:Adding run callback...
+140072675960576__2025-04-11 07:45:39 179101us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__146__add_run_callback__:wait_callbacks_.size():1
+140072675960576__2025-04-11 07:45:39 179103us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__151__add_run_callback__:wait_callbacks_.size():1
+140072675960576__2025-04-11 07:45:39 179105us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__219__wakeup__:Waking up event loop... fd:4
+140072675960576__2025-04-11 07:45:39 179117us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072675960576__2025-04-11 07:45:39 179119us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:14
+140072675960576__2025-04-11 07:45:39 179121us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:0
+140072675960576__2025-04-11 07:45:39 179123us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:0
+140072675960576__2025-04-11 07:45:39 179125us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.
+140072701142912__2025-04-11 07:45:39 179138us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072701142912__2025-04-11 07:45:39 179140us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:4
+140072701142912__2025-04-11 07:45:39 179146us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072701142912__2025-04-11 07:45:39 179148us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:4
+140072701142912__2025-04-11 07:45:39 179149us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:1
+140072701142912__2025-04-11 07:45:39 179151us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:1
+140072701142912__2025-04-11 07:45:39 179152us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__177__run_wait_callbacks__:Executing callback...-8878839441105405659
+140072701142912__2025-04-11 07:45:39 179155us__INFO__/home/hhdhh/learning/MyWebServer/src/Tcpserver.cpp__74__handle_close_mainthread__:close in main loop... conn:1
+140072701142912__2025-04-11 07:45:39 179160us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__144__add_run_callback__:Adding run callback...
+140072701142912__2025-04-11 07:45:39 179162us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__146__add_run_callback__:wait_callbacks_.size():1
+140072701142912__2025-04-11 07:45:39 179164us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__151__add_run_callback__:wait_callbacks_.size():1
+140072701142912__2025-04-11 07:45:39 179165us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__219__wakeup__:Waking up event loop... fd:14
+140072701142912__2025-04-11 07:45:39 179172us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.
+140072675960576__2025-04-11 07:45:39 179179us__INFO__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__38__poll__:epoll wait num_events:1
+140072675960576__2025-04-11 07:45:39 179181us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__42__poll__:epoll wait fd:14
+140072675960576__2025-04-11 07:45:39 179185us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__164__run_wait_callbacks__:Running pending callbacks...
+140072675960576__2025-04-11 07:45:39 179186us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__166__run_wait_callbacks__:loop:14
+140072675960576__2025-04-11 07:45:39 179188us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__167__run_wait_callbacks__:Callbacks size:1
+140072675960576__2025-04-11 07:45:39 179189us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__174__run_wait_callbacks__:Callbacks size:1
+140072675960576__2025-04-11 07:45:39 179191us__DEBUG__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__177__run_wait_callbacks__:Executing callback...-2015732134660278884
+140072675960576__2025-04-11 07:45:39 179194us__WARN__/home/hhdhh/learning/MyWebServer/src/Epoll.cpp__62__delete_channel__:not find channel
+140072675960576__2025-04-11 07:45:39 179195us__INFO__/home/hhdhh/learning/MyWebServer/src/Loop.cpp__181__run_wait_callbacks__:All pending callbacks executed.

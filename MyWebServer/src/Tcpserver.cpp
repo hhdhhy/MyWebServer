@@ -5,7 +5,7 @@
 #include <arpa/inet.h>
 #include <cstring>
 Tcpserver::Tcpserver(Loop* loop,sockaddr_in addr)
-:loop_(loop),acceptor_(loop,addr), started_(0),threadpool_(new Loopthreadpool(4))
+:loop_(loop),acceptor_(loop,addr), started_(0),threadpool_(new Loopthreadpool(4)),next_connection_id_(0)
 {
     acceptor_.set_connect_callback([this](int fd,sockaddr_in addr){handle_connect(fd,addr);});
 }
@@ -65,7 +65,8 @@ void Tcpserver::handle_connect(int fd, sockaddr_in addr)
 
 void Tcpserver::handle_close(const std::shared_ptr<Tcpconnection> &conn)
 {
-    loop_->add_run_callback([this,&conn](){handle_close_mainthread(conn);});//先从主线程删除conn
+    loop_->add_run_callback([this,conn](){handle_close_mainthread(conn);});//先从主线程删除conn
+    //不能用引用
 }
 
 void Tcpserver::handle_close_mainthread(const std::shared_ptr<Tcpconnection> &conn)
